@@ -8,6 +8,7 @@ import { QueryEditor } from "../../components/QueryEditor";
 import { useQueryRunner } from "../../hooks/useQueryRunner";
 import { useSessionHistory } from "../../hooks/useSessionHistory";
 import { QueryHistory } from "./QueryHistory";
+import { createDefaultQuery, parseQuery } from "./queryParsing";
 
 interface QueryPanelProps {
   meta: StudioMeta;
@@ -27,7 +28,7 @@ export function QueryPanel({ meta, selected, onRunResult }: QueryPanelProps) {
 
   async function run(): Promise<void> {
     setParseError(null);
-    const input = parseQuery(meta.kind, query);
+    const input = parseQuery(meta.kind, query, selected, meta.defaultLimit);
 
     if (input instanceof Error) {
       setParseError(input.message);
@@ -66,41 +67,4 @@ export function QueryPanel({ meta, selected, onRunResult }: QueryPanelProps) {
       <QueryHistory items={history.history} onSelect={setQuery} />
     </section>
   );
-}
-
-function parseQuery(kind: StudioMeta["kind"], query: string): QueryInput | Error {
-  if (kind === "sql") {
-    return { text: query };
-  }
-
-  try {
-    return JSON.parse(query) as QueryInput;
-  } catch (error) {
-    return new Error(error instanceof Error ? error.message : "MongoDB query must be valid JSON.");
-  }
-}
-
-function createDefaultQuery(kind: StudioMeta["kind"], selected: ContainerInfo | null, limit: number): string {
-  if (kind === "sql") {
-    const tableName = selected ? quoteSqlTableName(selected.name) : "public.table_name";
-    return `SELECT * FROM ${tableName} LIMIT ${limit};`;
-  }
-
-  return JSON.stringify(
-    {
-      collection: selected?.name ?? "collection_name",
-      operation: "find",
-      filter: {},
-      limit
-    },
-    null,
-    2
-  );
-}
-
-function quoteSqlTableName(name: string): string {
-  return name
-    .split(".")
-    .map((part) => `"${part.replace(/"/g, '""')}"`)
-    .join(".");
 }

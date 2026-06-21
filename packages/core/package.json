@@ -1,6 +1,6 @@
 {
   "name": "tabnyth",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Small local database studio for MongoDB and Postgres.",
   "type": "module",
   "bin": {
@@ -41,6 +41,7 @@
     "@preact/preset-vite": "^2.9.1",
     "@testing-library/preact": "^3.2.4",
     "codemirror": "^6.0.1",
+    "json5": "^2.2.3",
     "jsdom": "^25.0.1",
     "lucide-preact": "^1.21.0",
     "preact": "^10.25.3",
