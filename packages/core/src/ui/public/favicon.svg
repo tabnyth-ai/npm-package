@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="cyan-fill" x1="12" y1="8" x2="52" y2="58" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#8EFFFF" />
+      <stop offset="0.52" stop-color="#22D3EE" />
+      <stop offset="1" stop-color="#0891B2" />
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="14" fill="#05131A" />
+  <path
+    fill="url(#cyan-fill)"
+    d="M14 16c0-3.31 2.69-6 6-6h24c3.31 0 6 2.69 6 6v32c0 3.31-2.69 6-6 6H20c-3.31 0-6-2.69-6-6V16Zm8 2v7h20v-7H22Zm0 13v15h7V31h-7Zm13 0v15h7V31h-7Z"
+  />
+  <path fill="#D9FFFF" d="M20 17h24v8H34v23h-6V25h-8v-8Z" />
+</svg>
