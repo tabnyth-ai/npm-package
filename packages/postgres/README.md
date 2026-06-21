@@ -1,10 +1,10 @@
-# @tabnyth-studio/postgres
+# @tabnyth/postgres
 
-Postgres adapter for `tabnyth-studio`.
+Postgres adapter for `tabnyth`.
 
 ```bash
-npm i -D tabnyth-studio @tabnyth-studio/postgres
-npx tabnyth-studio --url "postgresql://user:pass@localhost:5432/mydb"
+npm i -D tabnyth @tabnyth/postgres
+npx tabnyth --url "postgresql://user:pass@localhost:5432/mydb"
 ```
 
 This package owns the `pg` dependency so the core package stays small.

@@ -6,7 +6,7 @@ import type {
   QueryInput,
   SearchInput,
   UpdateCellsInput
-} from "tabnyth-studio/adapters";
+} from "tabnyth/adapters";
 
 import { browseCollection } from "./browse";
 import { createMongoConnection } from "./client";

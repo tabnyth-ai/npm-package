@@ -1,6 +1,6 @@
 {
-  "name": "tabnyth",
-  "version": "0.1.0",
+  "name": "tabnyth-workspace",
+  "version": "0.1.1",
   "private": true,
   "type": "module",
   "workspaces": [
@@ -10,7 +10,7 @@
   ],
   "scripts": {
     "build": "npm run build -ws",
-    "dev": "npm run dev -w tabnyth-studio",
+    "dev": "npm run dev -w tabnyth",
     "test": "npm test -ws --if-present",
     "typecheck": "npm run typecheck -ws --if-present"
   },
@@ -221,7 +221,6 @@
     "sucrase": "^3.35.1",
     "supports-color": "^7.2.0",
     "symbol-tree": "^3.2.4",
-    "tabnyth-studio": "^0.1.0",
     "thenify": "^3.3.1",
     "thenify-all": "^1.6.0",
     "tinybench": "^2.9.0",

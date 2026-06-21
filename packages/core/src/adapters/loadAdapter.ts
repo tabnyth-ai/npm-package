@@ -1,8 +1,8 @@
 import type { AdapterModule, AdapterName, CreateAdapterOptions, DatabaseAdapter } from "./types";
 
 const adapterPackages: Record<AdapterName, string> = {
-  postgres: "@tabnyth-studio/postgres",
-  mongodb: "@tabnyth-studio/mongodb"
+  postgres: "@tabnyth/postgres",
+  mongodb: "@tabnyth/mongodb"
 };
 
 type ModuleLoader = (packageName: string) => Promise<AdapterModule>;

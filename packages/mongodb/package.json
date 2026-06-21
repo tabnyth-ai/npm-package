@@ -1,6 +1,6 @@
 {
-  "name": "@tabnyth-studio/mongodb",
-  "version": "0.1.0",
+  "name": "@tabnyth/mongodb",
+  "version": "0.1.1",
   "description": "MongoDB adapter for Tabnyth Studio.",
   "type": "module",
   "exports": {
@@ -10,6 +10,9 @@
     }
   },
   "files": ["dist"],
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "build": "tsup src/index.ts --format esm --dts --clean",
     "test": "vitest run",
@@ -19,11 +22,11 @@
     "mongodb": "^6.12.0"
   },
   "devDependencies": {
-    "tabnyth-studio": "0.1.0",
+    "tabnyth": "0.1.1",
     "tsup": "^8.3.5"
   },
   "peerDependencies": {
-    "tabnyth-studio": "^0.1.0"
+    "tabnyth": "^0.1.1"
   },
   "engines": {
     "node": ">=20.11"

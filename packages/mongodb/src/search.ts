@@ -1,5 +1,5 @@
 import type { Db } from "mongodb";
-import type { SearchInput, SearchResult } from "tabnyth-studio/adapters";
+import type { SearchInput, SearchResult } from "tabnyth/adapters";
 
 import { describeCollection, listCollections } from "./introspection";
 import { serializeValue } from "./mapDocuments";

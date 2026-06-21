@@ -1,10 +1,10 @@
-# @tabnyth-studio/mongodb
+# @tabnyth/mongodb
 
-MongoDB adapter for `tabnyth-studio`.
+MongoDB adapter for `tabnyth`.
 
 ```bash
-npm i -D tabnyth-studio @tabnyth-studio/mongodb
-npx tabnyth-studio --url "mongodb://localhost:27017/mydb"
+npm i -D tabnyth @tabnyth/mongodb
+npx tabnyth --url "mongodb://localhost:27017/mydb"
 ```
 
 This package owns the `mongodb` dependency so the core package stays small.

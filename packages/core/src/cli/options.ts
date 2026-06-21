@@ -34,7 +34,7 @@ interface RawCliOptions {
 }
 
 export function parseCliOptions(argv = process.argv, env = process.env): CliOptions {
-  const cli = cac("tabnyth-studio");
+  const cli = cac("tabnyth");
 
   cli
     .option("--url <url>", "Database URL")

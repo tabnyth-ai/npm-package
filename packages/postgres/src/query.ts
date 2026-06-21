@@ -1,5 +1,5 @@
 import type { Pool } from "pg";
-import type { QueryInput, QueryResult } from "tabnyth-studio/adapters";
+import type { QueryInput, QueryResult } from "tabnyth/adapters";
 
 import { mapRows } from "./mapRows";
 

@@ -1,6 +1,6 @@
 {
-  "name": "@tabnyth-studio/postgres",
-  "version": "0.1.0",
+  "name": "@tabnyth/postgres",
+  "version": "0.1.1",
   "description": "Postgres adapter for Tabnyth Studio.",
   "type": "module",
   "exports": {
@@ -10,6 +10,9 @@
     }
   },
   "files": ["dist"],
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "build": "tsup src/index.ts --format esm --dts --clean",
     "test": "vitest run",
@@ -20,11 +23,11 @@
   },
   "devDependencies": {
     "@types/pg": "^8.11.10",
-    "tabnyth-studio": "0.1.0",
+    "tabnyth": "0.1.1",
     "tsup": "^8.3.5"
   },
   "peerDependencies": {
-    "tabnyth-studio": "^0.1.0"
+    "tabnyth": "^0.1.1"
   },
   "engines": {
     "node": ">=20.11"

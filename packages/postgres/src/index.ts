@@ -6,7 +6,7 @@ import type {
   QueryInput,
   SearchInput,
   UpdateCellsInput
-} from "tabnyth-studio/adapters";
+} from "tabnyth/adapters";
 
 import { browseTable } from "./browse";
 import { createPostgresPool } from "./client";

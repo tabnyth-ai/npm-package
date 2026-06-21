@@ -1,6 +1,6 @@
 import { Db, MongoClient } from "mongodb";
 
-import type { CreateAdapterOptions } from "tabnyth-studio/adapters";
+import type { CreateAdapterOptions } from "tabnyth/adapters";
 
 export interface MongoConnection {
   client: MongoClient;

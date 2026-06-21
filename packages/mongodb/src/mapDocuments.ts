@@ -1,5 +1,5 @@
 import { Binary, Decimal128, ObjectId } from "mongodb";
-import type { QueryResult } from "tabnyth-studio/adapters";
+import type { QueryResult } from "tabnyth/adapters";
 
 export function mapDocuments(documents: Record<string, unknown>[], startedAt: number): QueryResult {
   const rows = documents.map((document) => serializeValue(document) as Record<string, unknown>);

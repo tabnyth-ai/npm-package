@@ -1,5 +1,5 @@
 import type { Pool } from "pg";
-import type { ColumnInfo, ContainerInfo, ContainerStructure, ForeignKeyInfo } from "tabnyth-studio/adapters";
+import type { ColumnInfo, ContainerInfo, ContainerStructure, ForeignKeyInfo } from "tabnyth/adapters";
 
 import { parseTableName } from "./names";
 

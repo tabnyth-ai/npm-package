@@ -1,5 +1,5 @@
 import type { FieldDef } from "pg";
-import type { QueryResult } from "tabnyth-studio/adapters";
+import type { QueryResult } from "tabnyth/adapters";
 
 export function mapRows(
   rows: Record<string, unknown>[],

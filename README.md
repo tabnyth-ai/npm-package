@@ -5,9 +5,9 @@ Small local database studio for development. It starts a localhost web UI, brows
 ## Packages
 
 ```txt
-tabnyth-studio              CLI, local server, shared adapter types, bundled UI
-@tabnyth-studio/postgres    Postgres adapter and pg dependency
-@tabnyth-studio/mongodb     MongoDB adapter and mongodb dependency
+tabnyth              CLI, local server, shared adapter types, bundled UI
+@tabnyth/postgres           Postgres adapter and pg dependency
+@tabnyth/mongodb            MongoDB adapter and mongodb dependency
 ```
 
 The core package does not include database drivers. Install the adapter you need as a dev dependency.
@@ -17,27 +17,27 @@ The core package does not include database drivers. Install the adapter you need
 MongoDB:
 
 ```bash
-npm i -D tabnyth-studio @tabnyth-studio/mongodb
-npx tabnyth-studio --url "mongodb://localhost:27017/mydb"
+npm i -D tabnyth @tabnyth/mongodb
+npx tabnyth --url "mongodb://localhost:27017/mydb"
 ```
 
 Postgres:
 
 ```bash
-npm i -D tabnyth-studio @tabnyth-studio/postgres
-npx tabnyth-studio --url "postgresql://user:pass@localhost:5432/mydb"
+npm i -D tabnyth @tabnyth/postgres
+npx tabnyth --url "postgresql://user:pass@localhost:5432/mydb"
 ```
 
 From an environment variable:
 
 ```bash
-npx tabnyth-studio --env DATABASE_URL
+npx tabnyth --env DATABASE_URL
 ```
 
 Enable write operations explicitly:
 
 ```bash
-npx tabnyth-studio --env DATABASE_URL --allow-write
+npx tabnyth --env DATABASE_URL --allow-write
 ```
 
 Write mode supports two edit paths:

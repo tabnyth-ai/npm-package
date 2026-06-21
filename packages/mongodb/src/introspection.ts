@@ -1,5 +1,5 @@
 import type { Db } from "mongodb";
-import type { ColumnInfo, ContainerInfo, ContainerStructure } from "tabnyth-studio/adapters";
+import type { ColumnInfo, ContainerInfo, ContainerStructure } from "tabnyth/adapters";
 
 import { serializeValue } from "./mapDocuments";
 

@@ -1,6 +1,6 @@
 import { Pool } from "pg";
 
-import type { CreateAdapterOptions } from "tabnyth-studio/adapters";
+import type { CreateAdapterOptions } from "tabnyth/adapters";
 
 export function createPostgresPool(options: CreateAdapterOptions): Pool {
   return new Pool({

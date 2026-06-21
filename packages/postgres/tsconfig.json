@@ -4,7 +4,7 @@
     "baseUrl": ".",
     "noEmit": true,
     "paths": {
-      "tabnyth-studio/adapters": ["../core/src/adapters/types.ts"]
+      "tabnyth/adapters": ["../core/src/adapters/types.ts"]
     }
   },
   "include": ["src"]

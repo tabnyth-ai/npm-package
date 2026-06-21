@@ -44,11 +44,11 @@ describe("loadAdapter", () => {
   });
 
   it("shows an install command when an adapter package is missing", async () => {
-    const error = new Error("Cannot find package '@tabnyth-studio/mongodb'");
+    const error = new Error("Cannot find package '@tabnyth/mongodb'");
     Object.assign(error, { code: "ERR_MODULE_NOT_FOUND" });
 
     await expect(loadAdapter("mongodb", options, async () => Promise.reject(error))).rejects.toThrow(
-      /npm i -D @tabnyth-studio\/mongodb/
+      /npm i -D @tabnyth\/mongodb/
     );
   });
 });

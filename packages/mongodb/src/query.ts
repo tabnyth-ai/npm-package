@@ -1,5 +1,5 @@
 import type { Db, Document } from "mongodb";
-import type { QueryInput, QueryResult } from "tabnyth-studio/adapters";
+import type { QueryInput, QueryResult } from "tabnyth/adapters";
 
 import { mapDocuments } from "./mapDocuments";
 

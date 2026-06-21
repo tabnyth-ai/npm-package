@@ -21,7 +21,7 @@ describe("detectAdapterName", () => {
 
 describe("parseCliOptions", () => {
   it("reads url and numeric defaults", () => {
-    const options = parseCliOptions(["node", "tabnyth-studio", "--url", "mongodb://localhost:27017/app"], {});
+    const options = parseCliOptions(["node", "tabnyth", "--url", "mongodb://localhost:27017/app"], {});
 
     expect(options.databaseUrl).toBe("mongodb://localhost:27017/app");
     expect(options.host).toBe("127.0.0.1");
@@ -32,7 +32,7 @@ describe("parseCliOptions", () => {
   });
 
   it("reads database URL from env", () => {
-    const options = parseCliOptions(["node", "tabnyth-studio", "--env", "MONGO_URL"], {
+    const options = parseCliOptions(["node", "tabnyth", "--env", "MONGO_URL"], {
       MONGO_URL: "mongodb://localhost:27017/app"
     });
 
@@ -42,7 +42,7 @@ describe("parseCliOptions", () => {
 
   it("clamps default limit to max limit", () => {
     const options = parseCliOptions(
-      ["node", "tabnyth-studio", "--url", "mongodb://localhost:27017/app", "--limit", "500", "--max-limit", "100"],
+      ["node", "tabnyth", "--url", "mongodb://localhost:27017/app", "--limit", "500", "--max-limit", "100"],
       {}
     );
 
@@ -50,6 +50,6 @@ describe("parseCliOptions", () => {
   });
 
   it("stops parsing after help is requested", () => {
-    expect(() => parseCliOptions(["node", "tabnyth-studio", "--help"], {})).toThrow(HelpRequested);
+    expect(() => parseCliOptions(["node", "tabnyth", "--help"], {})).toThrow(HelpRequested);
   });
 });

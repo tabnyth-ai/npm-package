@@ -1,5 +1,5 @@
 import type { Pool } from "pg";
-import type { ColumnInfo, ContainerInfo, SearchInput, SearchResult } from "tabnyth-studio/adapters";
+import type { ColumnInfo, ContainerInfo, SearchInput, SearchResult } from "tabnyth/adapters";
 
 import { describeTable, listTables } from "./introspection";
 import { parseTableName, quoteIdentifier, quoteTableName } from "./names";
