@@ -34,6 +34,23 @@ export interface SearchResponse {
   results: SearchResult[];
 }
 
+export interface NythAiChatRequest {
+  prompt: string;
+}
+
+export interface NythAiChatResponse {
+  text: string;
+  reasoning: string | null;
+  model: string;
+  agent?: number | string;
+  finishReason: string | null;
+  usage?: unknown;
+}
+
+export interface NythAiResultResponse {
+  result: NythAiChatResponse;
+}
+
 export type {
   BrowseInput,
   CellUpdate,

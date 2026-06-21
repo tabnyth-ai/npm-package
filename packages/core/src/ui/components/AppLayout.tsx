@@ -1,8 +1,9 @@
 import type { ComponentChildren } from "preact";
-import { MessageSquare, Moon, PanelLeftClose, PanelLeftOpen, Search, Send, Sparkles, Sun, X } from "lucide-preact";
+import { MessageSquare, Moon, PanelLeftClose, PanelLeftOpen, Search, Sun, X } from "lucide-preact";
 import { useEffect, useRef, useState } from "preact/hooks";
 
 import type { SearchResult } from "../api/types";
+import { NythAiDrawer } from "../features/nyth-ai/NythAiDrawer";
 import { QuickLoader } from "./QuickLoader";
 
 export type StudioView = "query" | "browser" | "visualizer" | "logs";
@@ -212,37 +213,7 @@ export function AppLayout({
         </div>
       ) : null}
 
-      {aiOpen ? (
-        <div class="ai-drawer-shell" role="presentation" onMouseDown={(event) => {
-          if (event.currentTarget === event.target) {
-            setAiOpen(false);
-          }
-        }}>
-          <aside aria-label="Ask Nyth AI" aria-modal="true" class="ai-drawer" role="dialog">
-            <div class="ai-drawer-header">
-              <strong>Ask Nyth AI</strong>
-              <button aria-label="Close Ask Nyth AI" class="icon-button" type="button" onClick={() => setAiOpen(false)}>
-                <X aria-hidden="true" size={20} />
-              </button>
-            </div>
-
-            <div class="ai-drawer-body">
-              <div class="ai-coming-soon-icon">
-                <Sparkles aria-hidden="true" size={28} />
-              </div>
-              <h2>Coming soon</h2>
-              <p>Nyth AI will help you ask questions about your schema, queries, and data once it is connected.</p>
-            </div>
-
-            <div class="ai-drawer-composer">
-              <textarea disabled placeholder="What would you like to know?" />
-              <button aria-label="Send message" disabled type="button">
-                <Send aria-hidden="true" size={18} />
-              </button>
-            </div>
-          </aside>
-        </div>
-      ) : null}
+      {aiOpen ? <NythAiDrawer onClose={() => setAiOpen(false)} /> : null}
     </div>
   );
 }

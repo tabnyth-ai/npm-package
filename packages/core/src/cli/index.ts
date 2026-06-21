@@ -4,10 +4,19 @@ import { fileURLToPath } from "node:url";
 import { loadAdapter } from "../adapters/loadAdapter";
 import { createServer } from "../server/createServer";
 import { startServer } from "../server/startServer";
+import { setupTabnythConfig } from "../config/setup";
 import { detectAdapterName } from "./detectAdapter";
 import { HelpRequested, parseCliOptions } from "./options";
 
 async function main(): Promise<void> {
+  if (isSetupCommand(process.argv[2])) {
+    await setupTabnythConfig({
+      forcePrompt: true,
+      projectRoot: process.cwd()
+    });
+    return;
+  }
+
   const options = parseCliOptions();
   const adapterName = detectAdapterName(options.databaseUrl, options.adapter);
   const adapter = await loadAdapter(adapterName, {
@@ -29,6 +38,7 @@ async function main(): Promise<void> {
       maxLimit: options.maxLimit,
       timeoutMs: options.timeoutMs
     },
+    projectRoot: process.cwd(),
     staticDir: fileURLToPath(new URL("../ui", import.meta.url))
   });
 
@@ -48,6 +58,10 @@ async function main(): Promise<void> {
 
   process.once("SIGINT", () => void shutdown());
   process.once("SIGTERM", () => void shutdown());
+}
+
+function isSetupCommand(value: string | undefined): boolean {
+  return value === "setup" || value === "config";
 }
 
 main().catch((error: unknown) => {

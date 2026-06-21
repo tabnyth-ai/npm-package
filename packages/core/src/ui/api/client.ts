@@ -1,6 +1,8 @@
 import type {
   BrowseInput,
   ContainersResponse,
+  NythAiChatRequest,
+  NythAiResultResponse,
   QueryInput,
   ResultResponse,
   SearchResponse,
@@ -41,6 +43,13 @@ export async function runQuery(input: QueryInput): Promise<ResultResponse> {
 
 export async function updateCells(input: UpdateCellsInput): Promise<ResultResponse> {
   return request<ResultResponse>("/api/cells", {
+    method: "POST",
+    body: JSON.stringify(input)
+  });
+}
+
+export async function askNythAi(input: NythAiChatRequest): Promise<NythAiResultResponse> {
+  return request<NythAiResultResponse>("/api/nyth-ai/chat", {
     method: "POST",
     body: JSON.stringify(input)
   });

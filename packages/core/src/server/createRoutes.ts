@@ -1,6 +1,7 @@
 import { Hono, type Context } from "hono";
 
 import type { CellUpdate, DatabaseAdapter, QueryInput } from "../adapters/types";
+import { askNythAi } from "../nyth/client";
 import { clampLimit, readOffset, type PaginationLimits } from "../safety/limits";
 import { assertMongoOperationAllowed } from "../safety/mongoGuard";
 import { assertSqlAllowed } from "../safety/sqlGuard";
@@ -15,9 +16,10 @@ export interface ApiConfig extends PaginationLimits {
 export interface ApiContext {
   adapter: DatabaseAdapter;
   config: ApiConfig;
+  projectRoot?: string;
 }
 
-export function createRoutes({ adapter, config }: ApiContext): Hono {
+export function createRoutes({ adapter, config, projectRoot }: ApiContext): Hono {
   const routes = new Hono();
 
   routes.get("/health", (c) => c.json({ ok: true }));
@@ -87,7 +89,23 @@ export function createRoutes({ adapter, config }: ApiContext): Hono {
     return c.json({ result });
   });
 
+  routes.post("/nyth-ai/chat", async (c) => {
+    const body = await readJson<Record<string, unknown>>(c);
+    const result = await requestNythAi(normalizeNythAiInput(body), projectRoot);
+
+    return c.json({ result });
+  });
+
   return routes;
+}
+
+async function requestNythAi(input: ReturnType<typeof normalizeNythAiInput>, projectRoot: string | undefined) {
+  try {
+    return await askNythAi(input, { projectRoot });
+  } catch (error) {
+    const message = error instanceof Error ? error.message : "Nyth AI request failed.";
+    throw new ApiError(readNythAiErrorStatus(message), message);
+  }
 }
 
 async function readJson<T>(c: Context): Promise<T> {
@@ -125,8 +143,58 @@ function readRequiredString(value: unknown, label: string): string {
   return value;
 }
 
+function normalizeNythAiInput(body: Record<string, unknown>) {
+  return {
+    prompt: readRequiredString(body.prompt, "prompt"),
+    system: readOptionalString(body.system),
+    model: readOptionalString(body.model),
+    thinking: readOptionalBoolean(body.thinking),
+    effort: readOptionalEffort(body.effort),
+    temperature: readOptionalNumber(body.temperature, "temperature"),
+    maxTokens: readOptionalNumber(body.maxTokens, "maxTokens")
+  };
+}
+
+function readNythAiErrorStatus(message: string): number {
+  if (/missing/i.test(message)) {
+    return 400;
+  }
+
+  if (/invalid|inactive/i.test(message)) {
+    return 401;
+  }
+
+  return 502;
+}
+
 function readOptionalString(value: unknown): string | undefined {
   return typeof value === "string" && value.trim() !== "" ? value : undefined;
+}
+
+function readOptionalBoolean(value: unknown): boolean | undefined {
+  return typeof value === "boolean" ? value : undefined;
+}
+
+function readOptionalEffort(value: unknown): "low" | "medium" | "high" | undefined {
+  if (value === "low" || value === "medium" || value === "high") {
+    return value;
+  }
+
+  return undefined;
+}
+
+function readOptionalNumber(value: unknown, label: string): number | undefined {
+  if (value === undefined || value === null || value === "") {
+    return undefined;
+  }
+
+  const parsed = Number(value);
+
+  if (!Number.isFinite(parsed)) {
+    throw new ApiError(400, `${label} must be a number.`);
+  }
+
+  return parsed;
 }
 
 function clampSearchLimit(value: unknown): number {

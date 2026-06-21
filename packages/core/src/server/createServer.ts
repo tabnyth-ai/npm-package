@@ -8,6 +8,7 @@ import { serveStaticUi } from "./static";
 export interface CreateServerOptions {
   adapter: DatabaseAdapter;
   config: ApiConfig;
+  projectRoot?: string;
   staticDir?: string;
 }
 
