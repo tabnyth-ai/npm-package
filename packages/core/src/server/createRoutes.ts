@@ -2,6 +2,7 @@ import { Hono, type Context } from "hono";
 
 import type { CellUpdate, DatabaseAdapter, QueryInput } from "../adapters/types";
 import { askNythAi } from "../nyth/client";
+import type { NythAiChatInput, NythAiSchemaContext } from "../nyth/types";
 import { clampLimit, readOffset, type PaginationLimits } from "../safety/limits";
 import { assertMongoOperationAllowed } from "../safety/mongoGuard";
 import { assertSqlAllowed } from "../safety/sqlGuard";
@@ -91,7 +92,14 @@ export function createRoutes({ adapter, config, projectRoot }: ApiContext): Hono
 
   routes.post("/nyth-ai/chat", async (c) => {
     const body = await readJson<Record<string, unknown>>(c);
-    const result = await requestNythAi(normalizeNythAiInput(body), projectRoot);
+    const input = normalizeNythAiInput(body);
+    const result = await requestNythAi(
+      {
+        ...input,
+        schema: await buildSchemaContext(adapter, config)
+      },
+      projectRoot
+    );
 
     return c.json({ result });
   });
@@ -99,7 +107,7 @@ export function createRoutes({ adapter, config, projectRoot }: ApiContext): Hono
   return routes;
 }
 
-async function requestNythAi(input: ReturnType<typeof normalizeNythAiInput>, projectRoot: string | undefined) {
+async function requestNythAi(input: NythAiChatInput, projectRoot: string | undefined) {
   try {
     return await askNythAi(input, { projectRoot });
   } catch (error) {
@@ -153,6 +161,47 @@ function normalizeNythAiInput(body: Record<string, unknown>) {
     temperature: readOptionalNumber(body.temperature, "temperature"),
     maxTokens: readOptionalNumber(body.maxTokens, "maxTokens")
   };
+}
+
+async function buildSchemaContext(adapter: DatabaseAdapter, config: ApiConfig): Promise<NythAiSchemaContext> {
+  const containers = await adapter.listContainers();
+  const structures = await describeContainers(adapter, containers.map((container) => container.name));
+
+  return {
+    adapterKind: adapter.kind,
+    adapterName: config.adapterName,
+    containers: containers.map((container) => {
+      const structure = structures.get(container.name);
+
+      return {
+        name: container.name,
+        type: container.type,
+        schema: container.schema,
+        displayName: container.displayName,
+        columns: structure?.columns ?? []
+      };
+    })
+  };
+}
+
+async function describeContainers(adapter: DatabaseAdapter, names: string[]): Promise<Map<string, Awaited<ReturnType<DatabaseAdapter["describeContainer"]>>>> {
+  const structures = new Map<string, Awaited<ReturnType<DatabaseAdapter["describeContainer"]>>>();
+  let nextIndex = 0;
+  const workerCount = Math.min(6, names.length);
+
+  await Promise.all(
+    Array.from({ length: workerCount }, async () => {
+      while (nextIndex < names.length) {
+        const index = nextIndex;
+        nextIndex += 1;
+
+        const name = names[index];
+        structures.set(name, await adapter.describeContainer(name));
+      }
+    })
+  );
+
+  return structures;
 }
 
 function readNythAiErrorStatus(message: string): number {

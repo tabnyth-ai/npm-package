@@ -1,5 +1,5 @@
 import type { JSX } from "preact";
-import { Send, Sparkles, X } from "lucide-preact";
+import { Code2, Send, Sparkles, X } from "lucide-preact";
 import { useEffect, useRef, useState } from "preact/hooks";
 
 import { askNythAi } from "../../api/client";
@@ -7,15 +7,18 @@ import { QuickLoader } from "../../components/QuickLoader";
 
 interface NythAiDrawerProps {
   onClose(): void;
+  onInsertQuery?(query: string): void;
 }
 
 interface ChatMessage {
   id: number;
   role: "assistant" | "user";
   content: string;
+  isQuery?: boolean;
+  query?: string | null;
 }
 
-export function NythAiDrawer({ onClose }: NythAiDrawerProps) {
+export function NythAiDrawer({ onClose, onInsertQuery }: NythAiDrawerProps) {
   const [draft, setDraft] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -47,7 +50,13 @@ export function NythAiDrawer({ onClose }: NythAiDrawerProps) {
 
     try {
       const response = await askNythAi({ prompt });
-      setMessages((current) => [...current, createMessage("assistant", response.result.text || "No response returned.")]);
+      setMessages((current) => [
+        ...current,
+        createMessage("assistant", response.result.text || "No response returned.", {
+          isQuery: response.result.isQuery,
+          query: response.result.query
+        })
+      ]);
     } catch (sendError) {
       setError(sendError instanceof Error ? sendError.message : "Nyth AI request failed.");
     } finally {
@@ -79,6 +88,13 @@ export function NythAiDrawer({ onClose }: NythAiDrawerProps) {
             <article class={`ai-message ${message.role}`} key={message.id}>
               <span>{message.role === "user" ? "You" : "Nyth AI"}</span>
               <p>{message.content}</p>
+              {message.query ? <pre class="ai-query-preview">{message.query}</pre> : null}
+              {message.isQuery && message.query ? (
+                <button class="ai-insert-query" type="button" onClick={() => onInsertQuery?.(message.query ?? "")}>
+                  <Code2 aria-hidden="true" size={15} />
+                  Insert
+                </button>
+              ) : null}
             </article>
           ))}
 
@@ -117,11 +133,13 @@ export function NythAiDrawer({ onClose }: NythAiDrawerProps) {
   );
 }
 
-function createMessage(role: ChatMessage["role"], content: string): ChatMessage {
+function createMessage(role: ChatMessage["role"], content: string, options: Pick<ChatMessage, "isQuery" | "query"> = {}): ChatMessage {
   return {
     id: Date.now() + Math.random(),
     role,
-    content
+    content,
+    isQuery: options.isQuery,
+    query: options.query
   };
 }
 

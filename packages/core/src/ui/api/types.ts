@@ -40,6 +40,8 @@ export interface NythAiChatRequest {
 
 export interface NythAiChatResponse {
   text: string;
+  isQuery: boolean;
+  query: string | null;
   reasoning: string | null;
   model: string;
   agent?: number | string;

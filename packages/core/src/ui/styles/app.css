@@ -590,6 +590,40 @@ button:disabled {
   line-height: 1.55;
 }
 
+.ai-query-preview {
+  max-height: 240px;
+  overflow: auto;
+  margin: 0;
+  border: 1px solid #273950;
+  border-radius: 7px;
+  background: #0b111c;
+  color: #c6f6ef;
+  padding: 10px;
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  font-size: 12px;
+  line-height: 1.5;
+  white-space: pre-wrap;
+}
+
+.ai-insert-query {
+  justify-self: start;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  height: 34px;
+  border: 1px solid #0f766e;
+  border-radius: 7px;
+  background: #0f766e;
+  color: #ecfeff;
+  padding: 0 11px;
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.ai-insert-query:hover {
+  background: #115e59;
+}
+
 .ai-message.user {
   align-self: flex-end;
 }
@@ -2431,6 +2465,12 @@ button:disabled {
   border-color: #0f766e;
   background: #0f766e;
   color: #ecfeff;
+}
+
+.app-frame[data-theme="light"] .ai-query-preview {
+  border-color: #d9e2ee;
+  background: #f3f7fb;
+  color: #0f3f3b;
 }
 
 .app-frame[data-theme="light"] .ai-error {

@@ -11,12 +11,14 @@ import { QueryHistory } from "./QueryHistory";
 import { createDefaultQuery, parseQuery } from "./queryParsing";
 
 interface QueryPanelProps {
+  insertedQuery?: string | null;
   meta: StudioMeta;
   selected: ContainerInfo | null;
+  onInsertedQueryConsumed?(): void;
   onRunResult?(result: QueryResultData): void;
 }
 
-export function QueryPanel({ meta, selected, onRunResult }: QueryPanelProps) {
+export function QueryPanel({ insertedQuery, meta, selected, onInsertedQueryConsumed, onRunResult }: QueryPanelProps) {
   const [query, setQuery] = useState(() => createDefaultQuery(meta.kind, selected, meta.defaultLimit));
   const [parseError, setParseError] = useState<string | null>(null);
   const runner = useQueryRunner();
@@ -25,6 +27,16 @@ export function QueryPanel({ meta, selected, onRunResult }: QueryPanelProps) {
   useEffect(() => {
     setQuery(createDefaultQuery(meta.kind, selected, meta.defaultLimit));
   }, [meta.kind, selected?.name, meta.defaultLimit]);
+
+  useEffect(() => {
+    if (!insertedQuery) {
+      return;
+    }
+
+    setQuery(insertedQuery);
+    setParseError(null);
+    onInsertedQueryConsumed?.();
+  }, [insertedQuery, onInsertedQueryConsumed]);
 
   async function run(): Promise<void> {
     setParseError(null);

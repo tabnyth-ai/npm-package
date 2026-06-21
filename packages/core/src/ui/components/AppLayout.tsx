@@ -16,6 +16,7 @@ interface AppLayoutProps {
   searchLoading?: boolean;
   searchResults?: SearchResult[];
   searchValue?: string;
+  onInsertAiQuery?(query: string): void;
   onViewChange(view: StudioView): void;
   onSearchChange?(value: string): void;
   onSearchResultSelect?(result: SearchResult): void;
@@ -36,6 +37,7 @@ export function AppLayout({
   searchLoading = false,
   searchResults = [],
   searchValue = "",
+  onInsertAiQuery,
   onViewChange,
   onSearchChange,
   onSearchResultSelect
@@ -213,7 +215,7 @@ export function AppLayout({
         </div>
       ) : null}
 
-      {aiOpen ? <NythAiDrawer onClose={() => setAiOpen(false)} /> : null}
+      {aiOpen ? <NythAiDrawer onClose={() => setAiOpen(false)} onInsertQuery={onInsertAiQuery} /> : null}
     </div>
   );
 }

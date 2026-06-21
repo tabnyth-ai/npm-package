@@ -1,3 +1,7 @@
+import { createRequire } from "node:module";
+import { resolve } from "node:path";
+import { pathToFileURL } from "node:url";
+
 import type { AdapterModule, AdapterName, CreateAdapterOptions, DatabaseAdapter } from "./types";
 
 const adapterPackages: Record<AdapterName, string> = {
@@ -34,7 +38,21 @@ export async function loadAdapter(
 }
 
 function defaultModuleLoader(packageName: string): Promise<AdapterModule> {
-  return import(packageName) as Promise<AdapterModule>;
+  return importFromProjectRoot(packageName) as Promise<AdapterModule>;
+}
+
+async function importFromProjectRoot(packageName: string): Promise<AdapterModule> {
+  try {
+    const projectRequire = createRequire(resolve(process.cwd(), "package.json"));
+    const modulePath = projectRequire.resolve(packageName);
+    return (await import(pathToFileURL(modulePath).href)) as AdapterModule;
+  } catch (error) {
+    if (isMissingModuleError(error, packageName)) {
+      return (await import(packageName)) as AdapterModule;
+    }
+
+    throw error;
+  }
 }
 
 function formatAdapterName(name: AdapterName): string {

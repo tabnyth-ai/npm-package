@@ -24,6 +24,7 @@ export function App() {
   const [limit, setLimit] = useState(100);
   const [searchValue, setSearchValue] = useState("");
   const [queryResult, setQueryResult] = useState<QueryResult | null>(null);
+  const [aiInsertedQuery, setAiInsertedQuery] = useState<string | null>(null);
   const browseState = useBrowse(selected, limit, page);
   const searchState = useSearchResources(searchValue);
 
@@ -74,6 +75,12 @@ export function App() {
     setSelected(container);
   }
 
+  function handleInsertAiQuery(query: string): void {
+    setAiInsertedQuery(query);
+    setQueryResult(null);
+    setActiveView("query");
+  }
+
   return (
     <AppLayout
       activeView={activeView}
@@ -83,6 +90,7 @@ export function App() {
       searchResults={searchState.results}
       searchValue={searchValue}
       onSearchChange={setSearchValue}
+      onInsertAiQuery={handleInsertAiQuery}
       onSearchResultSelect={handleSearchResultSelect}
       sidebar={
         <Sidebar
@@ -106,7 +114,13 @@ export function App() {
 
       {activeView === "query" ? (
         <div class="workspace-grid">
-          <QueryPanel meta={metaState.meta} selected={selected} onRunResult={setQueryResult} />
+          <QueryPanel
+            insertedQuery={aiInsertedQuery}
+            meta={metaState.meta}
+            selected={selected}
+            onInsertedQueryConsumed={() => setAiInsertedQuery(null)}
+            onRunResult={setQueryResult}
+          />
           <BrowsePanel
             allowWrite={metaState.meta.allowWrite}
             container={selected}

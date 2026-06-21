@@ -59,6 +59,7 @@ function toBackendPayload(input: NythAiChatInput, licenseKey: string): Record<st
   return {
     licenseKey,
     prompt: input.prompt,
+    ...(input.schema ? { schema: input.schema } : {}),
     ...(input.system ? { system: input.system } : {}),
     ...(input.model ? { model: input.model } : {}),
     ...(input.thinking === undefined ? {} : { thinking: input.thinking }),
