@@ -1,7 +1,6 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "baseUrl": ".",
     "noEmit": true,
     "paths": {
       "tabnyth/adapters": ["../core/src/adapters/types.ts"]

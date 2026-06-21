@@ -9,10 +9,10 @@
     "packages/mongodb"
   ],
   "scripts": {
-    "build": "npm run build -ws",
+    "build": "npm run build --workspaces",
     "dev": "npm run dev -w tabnyth",
-    "test": "npm test -ws --if-present",
-    "typecheck": "npm run typecheck -ws --if-present"
+    "test": "npm test --workspaces --if-present",
+    "typecheck": "npm run typecheck --workspaces --if-present"
   },
   "devDependencies": {
     "@types/node": "^22.10.2",
