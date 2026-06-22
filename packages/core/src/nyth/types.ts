@@ -48,3 +48,17 @@ export interface NythAiChatResponse {
   finishReason: string | null;
   usage?: unknown;
 }
+
+export interface NythAiCreditBalanceResponse {
+  creditBalance: number;
+  licenseKey: {
+    id: string;
+    keyPreview: string;
+    name: string;
+    status: "ACTIVE" | "REVOKED";
+    topicCredit?: number;
+    revokedAt?: string | null;
+    createdAt?: string;
+    updatedAt?: string;
+  };
+}

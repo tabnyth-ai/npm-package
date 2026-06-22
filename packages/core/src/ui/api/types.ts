@@ -53,6 +53,20 @@ export interface NythAiResultResponse {
   result: NythAiChatResponse;
 }
 
+export interface NythAiCreditBalance {
+  creditBalance: number;
+  licenseKey: {
+    id: string;
+    keyPreview: string;
+    name: string;
+    status: "ACTIVE" | "REVOKED";
+  };
+}
+
+export interface NythAiCreditsResponse {
+  result: NythAiCreditBalance;
+}
+
 export type {
   BrowseInput,
   CellUpdate,

@@ -209,6 +209,66 @@ button:disabled {
   gap: 14px;
 }
 
+.credit-balance-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 34px;
+  border: 1px solid #34465f;
+  border-radius: 7px;
+  background: #0b1726;
+  color: #d8e6f7;
+  padding: 0 6px 0 10px;
+  font-size: 13px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.credit-balance-pill svg {
+  color: #9ebcff;
+}
+
+.credit-balance-pill strong {
+  min-width: 24px;
+  color: #edf4ff;
+  font-size: 14px;
+  text-align: right;
+}
+
+.credit-balance-pill.error {
+  border-color: rgba(248, 113, 113, 0.42);
+  color: #fecaca;
+}
+
+.credit-balance-pill.error svg,
+.credit-balance-pill.error strong {
+  color: #fecaca;
+}
+
+.credit-refresh-button {
+  display: grid;
+  width: 24px;
+  height: 24px;
+  place-items: center;
+  border: 0;
+  border-radius: 5px;
+  background: transparent;
+  color: inherit;
+}
+
+.credit-refresh-button:hover {
+  background: rgba(158, 188, 255, 0.12);
+}
+
+.credit-refresh-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.credit-refresh-button .spinning {
+  animation: quick-loader-spin 0.7s linear infinite;
+}
+
 .search-shell {
   position: relative;
 }
@@ -2285,6 +2345,7 @@ button:disabled {
 
 .app-frame[data-theme="light"] .global-search,
 .app-frame[data-theme="light"] .sidebar-search,
+.app-frame[data-theme="light"] .credit-balance-pill,
 .app-frame[data-theme="light"] .ai-trigger,
 .app-frame[data-theme="light"] .schema-switcher select,
 .app-frame[data-theme="light"] .toolbar-actions input,
@@ -2322,6 +2383,26 @@ button:disabled {
 .app-frame[data-theme="light"] .ai-trigger {
   background: #ffffff;
   color: #172235;
+}
+
+.app-frame[data-theme="light"] .credit-balance-pill {
+  background: #ffffff;
+  color: #475569;
+}
+
+.app-frame[data-theme="light"] .credit-balance-pill svg,
+.app-frame[data-theme="light"] .credit-balance-pill strong {
+  color: #0f766e;
+}
+
+.app-frame[data-theme="light"] .credit-balance-pill.error,
+.app-frame[data-theme="light"] .credit-balance-pill.error svg,
+.app-frame[data-theme="light"] .credit-balance-pill.error strong {
+  color: #b91c1c;
+}
+
+.app-frame[data-theme="light"] .credit-refresh-button:hover {
+  background: #e2e8f0;
 }
 
 .app-frame[data-theme="light"] .ai-trigger:hover {
@@ -2743,6 +2824,10 @@ button:disabled {
     width: 260px;
   }
 
+  .credit-balance-label {
+    display: none;
+  }
+
   .ai-trigger span {
     display: none;
   }
@@ -2796,6 +2881,10 @@ button:disabled {
 
   .top-actions {
     justify-content: stretch;
+  }
+
+  .credit-balance-pill {
+    flex: none;
   }
 
   .global-search {

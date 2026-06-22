@@ -24,6 +24,7 @@ export function NythAiDrawer({ onClose, onInsertQuery }: NythAiDrawerProps) {
   const [loading, setLoading] = useState(false);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const inputRef = useRef<HTMLTextAreaElement>(null);
+  const pendingRef = useRef(false);
   const threadRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -38,11 +39,12 @@ export function NythAiDrawer({ onClose, onInsertQuery }: NythAiDrawerProps) {
   async function sendMessage(): Promise<void> {
     const prompt = draft.trim();
 
-    if (!prompt || loading) {
+    if (!prompt || loading || pendingRef.current) {
       return;
     }
 
     const userMessage = createMessage("user", prompt);
+    pendingRef.current = true;
     setDraft("");
     setError(null);
     setLoading(true);
@@ -60,6 +62,7 @@ export function NythAiDrawer({ onClose, onInsertQuery }: NythAiDrawerProps) {
     } catch (sendError) {
       setError(sendError instanceof Error ? sendError.message : "Nyth AI request failed.");
     } finally {
+      pendingRef.current = false;
       setLoading(false);
     }
   }

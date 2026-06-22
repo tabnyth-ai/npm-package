@@ -7,7 +7,6 @@ import { ErrorMessage } from "./components/ErrorMessage";
 import { LoadingState } from "./components/LoadingState";
 import { Sidebar } from "./components/Sidebar";
 import { BrowsePanel } from "./features/browser/BrowsePanel";
-import { LogsPanel } from "./features/logs/LogsPanel";
 import { QueryPanel } from "./features/query/QueryPanel";
 import { VisualizerPanel } from "./features/visualizer/VisualizerPanel";
 import { useBrowse } from "./hooks/useBrowse";
@@ -175,18 +174,6 @@ export function App() {
         </div>
       ) : null}
 
-      {activeView === "logs" ? (
-        <div class="workspace-grid single-panel">
-          <LogsPanel
-            allowWrite={metaState.meta.allowWrite}
-            adapterLabel={adapterLabel}
-            containersCount={containerState.containers.length}
-            lastBrowse={browseState.result}
-            selectedTitle={selectedTitle}
-            timeoutMs={metaState.meta.timeoutMs}
-          />
-        </div>
-      ) : null}
     </AppLayout>
   );
 }

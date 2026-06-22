@@ -1,5 +1,5 @@
 import { readTabnythConfig } from "../config/configFile";
-import type { NythAiChatInput, NythAiChatResponse } from "./types";
+import type { NythAiChatInput, NythAiChatResponse, NythAiCreditBalanceResponse } from "./types";
 
 const DEFAULT_API_BASE_URL = "http://localhost:8080";
 
@@ -30,6 +30,28 @@ export async function askNythAi(input: NythAiChatInput, options: NythAiClientOpt
   });
 
   const payload = (await response.json()) as ApiResponse<NythAiChatResponse>;
+
+  if (!response.ok || !payload.data) {
+    throw new Error(readApiError(payload, response.status));
+  }
+
+  return payload.data;
+}
+
+export async function getNythAiCreditBalance(options: NythAiClientOptions = {}): Promise<NythAiCreditBalanceResponse> {
+  const licenseKey = await resolveLicenseKey(undefined, options.projectRoot);
+  const fetcher = options.fetchImpl ?? fetch;
+  const apiBaseUrl = normalizeBaseUrl(options.apiBaseUrl ?? process.env.TABNYTH_API_URL ?? DEFAULT_API_BASE_URL);
+
+  const response = await fetcher(`${apiBaseUrl}/api/v1/nyth-ai/credits`, {
+    method: "POST",
+    headers: {
+      "content-type": "application/json"
+    },
+    body: JSON.stringify({ licenseKey })
+  });
+
+  const payload = (await response.json()) as ApiResponse<NythAiCreditBalanceResponse>;
 
   if (!response.ok || !payload.data) {
     throw new Error(readApiError(payload, response.status));

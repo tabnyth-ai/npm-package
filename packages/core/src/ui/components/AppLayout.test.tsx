@@ -3,6 +3,20 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { AppLayout } from "./AppLayout";
 
+vi.mock("../api/client", () => ({
+  getNythAiCredits: vi.fn(async () => ({
+    result: {
+      creditBalance: 2,
+      licenseKey: {
+        id: "license-id",
+        keyPreview: "tnk_...test",
+        name: "Test license",
+        status: "ACTIVE"
+      }
+    }
+  }))
+}));
+
 describe("AppLayout", () => {
   beforeEach(() => {
     localStorage.clear();
@@ -33,10 +47,9 @@ describe("AppLayout", () => {
 
     fireEvent.click(screen.getByRole("button", { name: "Data Browser" }));
     fireEvent.click(screen.getByRole("button", { name: "Visualizer" }));
-    fireEvent.click(screen.getByRole("button", { name: "Logs" }));
 
     expect(onViewChange).toHaveBeenNthCalledWith(1, "browser");
     expect(onViewChange).toHaveBeenNthCalledWith(2, "visualizer");
-    expect(onViewChange).toHaveBeenNthCalledWith(3, "logs");
+    expect(screen.queryByRole("button", { name: "Logs" })).toBeNull();
   });
 });

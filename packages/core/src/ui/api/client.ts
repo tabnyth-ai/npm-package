@@ -2,6 +2,7 @@ import type {
   BrowseInput,
   ContainersResponse,
   NythAiChatRequest,
+  NythAiCreditsResponse,
   NythAiResultResponse,
   QueryInput,
   ResultResponse,
@@ -53,6 +54,10 @@ export async function askNythAi(input: NythAiChatRequest): Promise<NythAiResultR
     method: "POST",
     body: JSON.stringify(input)
   });
+}
+
+export async function getNythAiCredits(): Promise<NythAiCreditsResponse> {
+  return request<NythAiCreditsResponse>("/api/nyth-ai/credits");
 }
 
 async function request<T>(path: string, init?: RequestInit): Promise<T> {

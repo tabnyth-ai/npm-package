@@ -1,7 +1,7 @@
 import { Hono, type Context } from "hono";
 
 import type { CellUpdate, DatabaseAdapter, QueryInput } from "../adapters/types";
-import { askNythAi } from "../nyth/client";
+import { askNythAi, getNythAiCreditBalance } from "../nyth/client";
 import type { NythAiChatInput, NythAiSchemaContext } from "../nyth/types";
 import { clampLimit, readOffset, type PaginationLimits } from "../safety/limits";
 import { assertMongoOperationAllowed } from "../safety/mongoGuard";
@@ -104,6 +104,12 @@ export function createRoutes({ adapter, config, projectRoot }: ApiContext): Hono
     return c.json({ result });
   });
 
+  routes.get("/nyth-ai/credits", async (c) => {
+    const result = await requestNythAiCredits(projectRoot);
+
+    return c.json({ result });
+  });
+
   return routes;
 }
 
@@ -112,6 +118,15 @@ async function requestNythAi(input: NythAiChatInput, projectRoot: string | undef
     return await askNythAi(input, { projectRoot });
   } catch (error) {
     const message = error instanceof Error ? error.message : "Nyth AI request failed.";
+    throw new ApiError(readNythAiErrorStatus(message), message);
+  }
+}
+
+async function requestNythAiCredits(projectRoot: string | undefined) {
+  try {
+    return await getNythAiCreditBalance({ projectRoot });
+  } catch (error) {
+    const message = error instanceof Error ? error.message : "Nyth AI credit balance failed.";
     throw new ApiError(readNythAiErrorStatus(message), message);
   }
 }
@@ -211,6 +226,10 @@ function readNythAiErrorStatus(message: string): number {
 
   if (/invalid|inactive/i.test(message)) {
     return 401;
+  }
+
+  if (/credit|payment|required/i.test(message)) {
+    return 402;
   }
 
   return 502;

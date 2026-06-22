@@ -1,12 +1,13 @@
 import type { ComponentChildren } from "preact";
-import { MessageSquare, Moon, PanelLeftClose, PanelLeftOpen, Search, Sun, X } from "lucide-preact";
+import { Coins, MessageSquare, Moon, PanelLeftClose, PanelLeftOpen, RefreshCw, Search, Sun, X } from "lucide-preact";
 import { useEffect, useRef, useState } from "preact/hooks";
 
+import { getNythAiCredits } from "../api/client";
 import type { SearchResult } from "../api/types";
 import { NythAiDrawer } from "../features/nyth-ai/NythAiDrawer";
 import { QuickLoader } from "./QuickLoader";
 
-export type StudioView = "query" | "browser" | "visualizer" | "logs";
+export type StudioView = "query" | "browser" | "visualizer";
 
 interface AppLayoutProps {
   activeView: StudioView;
@@ -25,8 +26,7 @@ interface AppLayoutProps {
 const tabs: Array<{ label: string; view: StudioView }> = [
   { label: "Query Editor", view: "query" },
   { label: "Data Browser", view: "browser" },
-  { label: "Visualizer", view: "visualizer" },
-  { label: "Logs", view: "logs" }
+  { label: "Visualizer", view: "visualizer" }
 ];
 
 export function AppLayout({
@@ -46,6 +46,9 @@ export function AppLayout({
   const [searchOpen, setSearchOpen] = useState(false);
   const [aiOpen, setAiOpen] = useState(false);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  const [creditBalance, setCreditBalance] = useState<number | null>(null);
+  const [creditError, setCreditError] = useState<string | null>(null);
+  const [creditLoading, setCreditLoading] = useState(false);
   const searchInputRef = useRef<HTMLInputElement>(null);
   const nextTheme = theme === "dark" ? "light" : "dark";
   const trimmedSearch = searchValue.trim();
@@ -53,6 +56,10 @@ export function AppLayout({
   useEffect(() => {
     localStorage.setItem("tabnyth-theme", theme);
   }, [theme]);
+
+  useEffect(() => {
+    void refreshCreditBalance();
+  }, []);
 
   useEffect(() => {
     function handleKeyDown(event: KeyboardEvent): void {
@@ -93,6 +100,20 @@ export function AppLayout({
     return () => window.clearTimeout(timer);
   }, [searchOpen]);
 
+  async function refreshCreditBalance(): Promise<void> {
+    setCreditLoading(true);
+    setCreditError(null);
+
+    try {
+      const response = await getNythAiCredits();
+      setCreditBalance(response.result.creditBalance);
+    } catch (error) {
+      setCreditError(error instanceof Error ? error.message : "Unable to fetch credits.");
+    } finally {
+      setCreditLoading(false);
+    }
+  }
+
   return (
     <div class={sidebarCollapsed ? "app-frame sidebar-collapsed" : "app-frame"} data-theme={theme}>
       <header class="top-nav">
@@ -116,6 +137,20 @@ export function AppLayout({
         </nav>
 
         <div class="top-actions">
+          <div class={creditError ? "credit-balance-pill error" : "credit-balance-pill"} title={creditError ?? "Nyth AI credits"}>
+            <Coins aria-hidden="true" size={16} />
+            <span class="credit-balance-label">Credits</span>
+            <strong>{creditLoading && creditBalance === null ? "..." : creditBalance ?? "--"}</strong>
+            <button
+              aria-label="Refresh Nyth AI credit balance"
+              class="credit-refresh-button"
+              disabled={creditLoading}
+              type="button"
+              onClick={() => void refreshCreditBalance()}
+            >
+              <RefreshCw aria-hidden="true" class={creditLoading ? "spinning" : undefined} size={14} />
+            </button>
+          </div>
           <button class="global-search search-trigger" type="button" onClick={() => setSearchOpen(true)}>
             <Search aria-hidden="true" size={16} />
             <span class="search-trigger-label">Search resources...</span>
