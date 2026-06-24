@@ -6,5 +6,5 @@ try {
 } catch (error) {
   const message = error instanceof Error ? error.message : String(error);
   console.warn(`Tabnyth setup skipped: ${message}`);
-  console.warn("Run `npx tabnyth setup` after installation to configure your license key.");
+  console.warn("Run `npx tabnyth setup` after installation to add TABNYTH_KEY to your .env file.");
 }

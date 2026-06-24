@@ -1,4 +1,4 @@
-import { readTabnythConfig } from "../config/configFile";
+import { ENV_FILE_NAME, TABNYTH_KEY_ENV_NAME, readTabnythLicenseKey } from "../config/configFile";
 import type { NythAiChatInput, NythAiChatResponse, NythAiCreditBalanceResponse } from "./types";
 
 const DEFAULT_API_BASE_URL = "http://localhost:8080";
@@ -67,11 +67,12 @@ async function resolveLicenseKey(value: string | undefined, projectRoot: string 
     return directValue;
   }
 
-  const config = await readTabnythConfig(projectRoot);
-  const configValue = config.licenseKey.trim();
+  const configValue = await readTabnythLicenseKey(projectRoot);
 
   if (!configValue) {
-    throw new Error("Tabnyth license key is missing. Run `tabnyth setup` or update tabnyth.config.json.");
+    throw new Error(
+      `Tabnyth license key is missing. Run \`tabnyth setup\`, then paste your key into ${TABNYTH_KEY_ENV_NAME} in ${ENV_FILE_NAME}.`
+    );
   }
 
   return configValue;

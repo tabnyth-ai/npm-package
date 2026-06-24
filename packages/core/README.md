@@ -18,21 +18,20 @@ Writes are disabled by default. Pass `--allow-write` only when you intentionally
 
 ## License setup
 
-On install, Tabnyth asks for your license key and writes it to `tabnyth.config.json` in your project root. If the prompt is skipped, run:
+On install, Tabnyth appends a `TABNYTH_KEY=` placeholder to your project `.env`. If setup is skipped, run:
 
 ```bash
 npx tabnyth setup
 ```
 
-The config file is intentionally small:
+Then paste your license key into `.env`:
 
-```json
-{
-  "licenseKey": "tnk_your_license_key"
-}
+```dotenv
+# Paste your Tabnyth license key here or get it generated from https://tabnyth.cloud/docs/generate-license-key
+TABNYTH_KEY=tnk_your_license_key
 ```
 
-Nyth AI requests use that license key. During local development, point the package at your backend with:
+Nyth AI requests use `TABNYTH_KEY`. During local development, point the package at your backend with:
 
 ```bash
 TABNYTH_API_URL=http://localhost:8080 npx tabnyth --url "postgresql://user:pass@localhost:5432/mydb"

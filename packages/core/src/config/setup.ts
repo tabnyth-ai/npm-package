@@ -1,23 +1,22 @@
-import { spawn } from "node:child_process";
-import { stdin as defaultStdin, stdout as defaultStdout } from "node:process";
-import { createInterface } from "node:readline/promises";
+import { stdout as defaultStdout } from "node:process";
 
 import {
-  CONFIG_FILE_NAME,
-  hasLicenseKey,
-  normalizeLicenseKey,
-  readTabnythConfig,
-  resolveConfigPath,
+  ENV_FILE_NAME,
+  TABNYTH_KEY_ENV_NAME,
+  ensureTabnythEnvEntry,
+  hasTabnythEnvEntryInFile,
+  readTabnythKeyFromEnvFile,
   resolveProjectRoot,
-  writeTabnythConfig,
-  type TabnythConfig
+  resolveEnvPath
 } from "./configFile";
 
-export const DEFAULT_LICENSE_DOCS_URL = "https://tabnyth.com/docs/generate-license-key";
+export const DEFAULT_LICENSE_DOCS_URL = "https://tabnyth.cloud/docs/generate-license-key";
 
-export type SetupStatus = "configured" | "existing" | "opened-docs" | "created-empty" | "skipped";
+export type SetupStatus = "configured" | "existing" | "created-empty" | "skipped";
 
 export interface SetupResult {
+  envPath: string;
+  /** @deprecated Use envPath. Kept for callers compiled against the old setup result. */
   configPath: string;
   status: SetupStatus;
 }
@@ -26,104 +25,49 @@ export interface SetupTabnythConfigOptions {
   docsUrl?: string;
   env?: NodeJS.ProcessEnv;
   forcePrompt?: boolean;
-  input?: NodeJS.ReadStream;
   output?: NodeJS.WriteStream;
   projectRoot?: string;
-  openExternalUrl?(url: string): Promise<boolean>;
 }
 
 export async function setupTabnythConfig(options: SetupTabnythConfigOptions = {}): Promise<SetupResult> {
   const env = options.env ?? process.env;
   const projectRoot = options.projectRoot ?? resolveProjectRoot(env);
-  const configPath = resolveConfigPath(projectRoot);
+  const envPath = resolveEnvPath(projectRoot);
   const output = options.output ?? defaultStdout;
   const docsUrl = options.docsUrl ?? env.TABNYTH_LICENSE_DOCS_URL ?? DEFAULT_LICENSE_DOCS_URL;
 
   if (!options.forcePrompt && shouldSkipSetup(env)) {
-    return { configPath, status: "skipped" };
+    return toResult(envPath, "skipped");
   }
 
-  const config = await readTabnythConfig(projectRoot);
+  const alreadyHadEntry = await hasTabnythEnvEntryInFile(projectRoot);
+  await ensureTabnythEnvEntry(projectRoot);
 
-  if (hasLicenseKey(config) && !options.forcePrompt) {
-    output.write(`Tabnyth license is already configured in ${CONFIG_FILE_NAME}.\n`);
-    return { configPath, status: "existing" };
-  }
-
-  if (!options.forcePrompt && !canPrompt(options.input ?? defaultStdin, output)) {
-    await writeTabnythConfig(projectRoot, config);
-    output.write(`Created ${CONFIG_FILE_NAME}. Add your licenseKey when you are ready.\n`);
-    return { configPath, status: "created-empty" };
-  }
-
-  const licenseKey = await promptForLicenseKey(options.input ?? defaultStdin, output);
+  const licenseKey = (env[TABNYTH_KEY_ENV_NAME]?.trim() || (await readTabnythKeyFromEnvFile(projectRoot))).trim();
 
   if (licenseKey) {
-    await writeTabnythConfig(projectRoot, { licenseKey });
-    output.write(`Saved Tabnyth license in ${CONFIG_FILE_NAME}.\n`);
-    return { configPath, status: "configured" };
+    output.write(`Tabnyth license is configured via ${TABNYTH_KEY_ENV_NAME}.\n`);
+    return toResult(envPath, "configured");
   }
 
-  await writeTabnythConfig(projectRoot, config);
-  const opened = await (options.openExternalUrl ?? openExternalUrl)(docsUrl);
-  output.write(`Open ${docsUrl} to generate a license key, then paste it into ${CONFIG_FILE_NAME}.\n`);
-
-  if (!opened) {
-    output.write("Your browser could not be opened automatically.\n");
+  if (alreadyHadEntry) {
+    output.write(`${TABNYTH_KEY_ENV_NAME} is already present in ${ENV_FILE_NAME}. Paste your license key when you are ready.\n`);
+    return toResult(envPath, "existing");
   }
 
-  return { configPath, status: "opened-docs" };
+  output.write(`Added ${TABNYTH_KEY_ENV_NAME} to ${ENV_FILE_NAME}.\n`);
+  output.write(`Paste your Tabnyth license key there, or generate one at ${docsUrl}.\n`);
+  return toResult(envPath, "created-empty");
 }
 
 function shouldSkipSetup(env: NodeJS.ProcessEnv): boolean {
   return env.TABNYTH_SKIP_SETUP === "1" || env.CI === "true" || env.CI === "1";
 }
 
-function canPrompt(input: NodeJS.ReadStream, output: NodeJS.WriteStream): boolean {
-  return Boolean(input.isTTY && output.isTTY);
-}
-
-async function promptForLicenseKey(input: NodeJS.ReadStream, output: NodeJS.WriteStream): Promise<string> {
-  const rl = createInterface({ input, output });
-
-  try {
-    const answer = await rl.question(
-      "Paste your Tabnyth license key, or press Enter to open /docs/generate-license-key: "
-    );
-
-    return normalizeLicenseKey(answer);
-  } finally {
-    rl.close();
-  }
-}
-
-async function openExternalUrl(url: string): Promise<boolean> {
-  const command = getOpenCommand(process.platform, url);
-
-  if (!command) {
-    return false;
-  }
-
-  try {
-    const child = spawn(command.bin, command.args, {
-      detached: true,
-      stdio: "ignore"
-    });
-    child.unref();
-    return true;
-  } catch {
-    return false;
-  }
-}
-
-function getOpenCommand(platform: NodeJS.Platform, url: string): { bin: string; args: string[] } | null {
-  if (platform === "darwin") {
-    return { bin: "open", args: [url] };
-  }
-
-  if (platform === "win32") {
-    return { bin: "cmd", args: ["/c", "start", "", url] };
-  }
-
-  return { bin: "xdg-open", args: [url] };
+function toResult(envPath: string, status: SetupStatus): SetupResult {
+  return {
+    envPath,
+    configPath: envPath,
+    status
+  };
 }
