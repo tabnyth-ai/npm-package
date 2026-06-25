@@ -257,7 +257,7 @@ export function AppLayout({
 
 function readInitialTheme(): "dark" | "light" {
   const stored = localStorage.getItem("tabnyth-theme");
-  return stored === "light" ? "light" : "dark";
+  return stored === "dark" ? "dark" : "light";
 }
 
 function SearchShadowLoader() {

@@ -29,9 +29,11 @@ describe("AppLayout", () => {
       </AppLayout>
     );
 
-    fireEvent.click(screen.getByRole("button", { name: "Switch to light theme" }));
-
     expect(screen.getByRole("button", { name: "Switch to dark theme" })).toBeTruthy();
+
+    fireEvent.click(screen.getByRole("button", { name: "Switch to dark theme" }));
+
+    expect(screen.getByRole("button", { name: "Switch to light theme" })).toBeTruthy();
     expect(screen.queryByRole("button", { name: "Notifications" })).toBeNull();
     expect(screen.queryByRole("button", { name: "Account" })).toBeNull();
   });
