@@ -34,6 +34,20 @@ From an environment variable:
 npx tabnyth --env DATABASE_URL
 ```
 
+From a project env file:
+
+```json
+{
+  "scripts": {
+    "tabnyth": "tabnyth .env.dev DATABASE_URL"
+  }
+}
+```
+
+```bash
+npm run tabnyth
+```
+
 Enable write operations explicitly:
 
 ```bash
@@ -61,6 +75,7 @@ Inline Data Browser edits require `--allow-write`. Postgres tables must have a p
 ```txt
 --url <url>              Database URL
 --env <name>             Env var name, default DATABASE_URL
+--env-file <path>        Env file to load, e.g. .env.dev
 --adapter <name>         postgres or mongodb, optional override
 --host <host>            Default 127.0.0.1
 --port <port>            Default 5555
