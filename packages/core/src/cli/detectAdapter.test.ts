@@ -33,6 +33,7 @@ describe("parseCliOptions", () => {
     expect(options.defaultLimit).toBe(100);
     expect(options.maxLimit).toBe(1000);
     expect(options.allowWrite).toBe(false);
+    expect(options.promptForMode).toBe(true);
   });
 
   it("reads database URL from env", () => {
@@ -64,6 +65,28 @@ describe("parseCliOptions", () => {
 
     expect(options.databaseUrl).toBe("mongodb://localhost:27017/app");
     expect(env.TABNYTH_KEY).toBe("tnk_test");
+  });
+
+  it("reads an explicit edit mode", () => {
+    const options = parseCliOptions(["node", "tabnyth", "--url", "mongodb://localhost:27017/app", "--mode", "edit"], {});
+
+    expect(options.mode).toBe("edit");
+    expect(options.allowWrite).toBe(true);
+    expect(options.promptForMode).toBe(false);
+  });
+
+  it("keeps --allow-write as an edit mode shortcut", () => {
+    const options = parseCliOptions(["node", "tabnyth", "--url", "mongodb://localhost:27017/app", "--allow-write"], {});
+
+    expect(options.mode).toBe("edit");
+    expect(options.allowWrite).toBe(true);
+    expect(options.promptForMode).toBe(false);
+  });
+
+  it("rejects invalid startup modes", () => {
+    expect(() => parseCliOptions(["node", "tabnyth", "--url", "mongodb://localhost:27017/app", "--mode", "admin"], {})).toThrow(
+      "Invalid --mode value. Use view or edit."
+    );
   });
 
   it("includes the env file in the missing database URL message", async () => {

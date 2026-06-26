@@ -2,11 +2,13 @@
 import { fileURLToPath } from "node:url";
 
 import { loadAdapter } from "../adapters/loadAdapter";
+import { readTabnythLicenseKey } from "../config/configFile";
 import { createServer } from "../server/createServer";
 import { startServer } from "../server/startServer";
 import { setupTabnythConfig } from "../config/setup";
 import { detectAdapterName } from "./detectAdapter";
 import { HelpRequested, parseCliOptions } from "./options";
+import { resolveStartupMode, writeStartupSummary } from "./startup";
 
 async function main(): Promise<void> {
   if (isSetupCommand(process.argv[2])) {
@@ -18,10 +20,17 @@ async function main(): Promise<void> {
   }
 
   const options = parseCliOptions();
+  const startupMode = await resolveStartupMode({
+    mode: options.mode,
+    prompt: options.promptForMode
+  });
+  const allowWrite = startupMode === "edit";
+  const licenseKey = await readTabnythLicenseKey(process.cwd());
+
   const adapterName = detectAdapterName(options.databaseUrl, options.adapter);
   const adapter = await loadAdapter(adapterName, {
     connectionString: options.databaseUrl,
-    allowWrite: options.allowWrite,
+    allowWrite,
     defaultLimit: options.defaultLimit,
     maxLimit: options.maxLimit,
     timeoutMs: options.timeoutMs
@@ -33,7 +42,7 @@ async function main(): Promise<void> {
     adapter,
     config: {
       adapterName,
-      allowWrite: options.allowWrite,
+      allowWrite,
       defaultLimit: options.defaultLimit,
       maxLimit: options.maxLimit,
       timeoutMs: options.timeoutMs
@@ -47,8 +56,13 @@ async function main(): Promise<void> {
     port: options.port
   });
 
+  writeStartupSummary({
+    databaseUrl: options.databaseUrl,
+    licenseKey,
+    mode: startupMode
+  });
   console.log(`Tabnyth Studio is running at http://${options.host}:${options.port}`);
-  console.log(`Adapter: ${adapterName}${options.allowWrite ? " (write mode enabled)" : " (read-only)"}`);
+  console.log(`Adapter: ${adapterName}${allowWrite ? " (write mode enabled)" : " (read-only)"}`);
 
   const shutdown = async (): Promise<void> => {
     await server.close();

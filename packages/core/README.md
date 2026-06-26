@@ -19,10 +19,19 @@ To read the database URL from a custom env file:
 ```json
 {
   "scripts": {
-    "tabnyth": "tabnyth .env.dev DATABASE_URL"
+    "tabnyth": "npx tabnyth .env.dev DATABASE_URL"
   }
 }
 ```
+
+Running `npm run tabnyth` opens a startup prompt:
+
+```txt
+View mode only - this will allow you to see data in your database
+Edit mode - this will allow you to make edits
+```
+
+Use the arrow keys to pick a mode and press Enter. Use `--mode view` or `--mode edit` to skip the prompt in scripts.
 
 Writes are disabled by default. Pass `--allow-write` only when you intentionally want write operations enabled.
 

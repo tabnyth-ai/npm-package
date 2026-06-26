@@ -17,12 +17,12 @@ interface KeypressKey {
 type KeypressListener = (chunk: string, key: KeypressKey) => void;
 
 export interface PromptInput extends NodeJS.ReadStream {
-  isRaw?: boolean;
-  setRawMode?: (mode: boolean) => this;
+  isRaw: boolean;
+  setRawMode: (mode: boolean) => this;
 }
 
 export interface PromptOutput extends NodeJS.WriteStream {
-  isTTY?: boolean;
+  isTTY: boolean;
 }
 
 export interface ResolveStartupModeOptions {
@@ -36,7 +36,7 @@ export interface StartupSummary {
   databaseUrl: string;
   licenseKey?: string;
   mode: StartupMode;
-  output?: Pick<NodeJS.WriteStream, "write">;
+  output?: { write(chunk: string): unknown };
 }
 
 const modeChoices: ModeChoice[] = [
