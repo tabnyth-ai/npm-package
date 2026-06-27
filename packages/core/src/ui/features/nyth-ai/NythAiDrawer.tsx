@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "preact/hooks";
 
 import { askNythAi } from "../../api/client";
 import { QuickLoader } from "../../components/QuickLoader";
+import { Markdown } from "./Markdown";
 
 interface NythAiDrawerProps {
   onClose(): void;
@@ -90,7 +91,7 @@ export function NythAiDrawer({ onClose, onInsertQuery }: NythAiDrawerProps) {
           {messages.map((message) => (
             <article class={`ai-message ${message.role}`} key={message.id}>
               <span>{message.role === "user" ? "You" : "Nyth AI"}</span>
-              <p>{message.content}</p>
+              {message.role === "assistant" ? <Markdown content={message.content} /> : <p>{message.content}</p>}
               {message.query ? <pre class="ai-query-preview">{message.query}</pre> : null}
               {message.isQuery && message.query ? (
                 <button class="ai-insert-query" type="button" onClick={() => onInsertQuery?.(message.query ?? "")}>
