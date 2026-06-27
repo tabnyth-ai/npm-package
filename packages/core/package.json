@@ -1,6 +1,6 @@
 {
   "name": "tabnyth",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "Small local database studio for MongoDB and Postgres.",
   "type": "module",
   "bin": {
