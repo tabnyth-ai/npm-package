@@ -1648,14 +1648,19 @@ button:disabled {
 .relation-path {
   fill: none;
   stroke: #789cff;
-  stroke-dasharray: 6 5;
   stroke-linecap: round;
-  stroke-width: 1.4;
-  opacity: 0.72;
+  stroke-linejoin: round;
+  stroke-width: 1.5;
+  opacity: 0.85;
 }
 
 .relation-layer marker path {
   fill: #789cff;
+}
+
+.relation-dot {
+  fill: #789cff;
+  opacity: 0.95;
 }
 
 .schema-card {
@@ -1699,6 +1704,43 @@ button:disabled {
   min-height: 48px;
   border-bottom: 1px solid #1f344a;
   padding: 0 12px;
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+}
+
+.schema-card-header:active {
+  cursor: grabbing;
+}
+
+.schema-header-meta {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 6px;
+}
+
+.schema-open-button {
+  display: grid;
+  width: 24px;
+  height: 24px;
+  flex: 0 0 auto;
+  place-items: center;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  background: transparent;
+  color: #9aa8bc;
+  cursor: pointer;
+  transition:
+    background 140ms ease,
+    border-color 140ms ease,
+    color 140ms ease;
+}
+
+.schema-open-button:hover {
+  border-color: #5c7dae;
+  background: rgba(158, 188, 255, 0.12);
+  color: #e5efff;
 }
 
 .schema-title {
@@ -1737,7 +1779,7 @@ button:disabled {
 
 .schema-field {
   display: grid;
-  grid-template-columns: 44px minmax(0, 1fr) auto;
+  grid-template-columns: 18px minmax(0, 1fr) auto;
   align-items: center;
   gap: 8px;
   min-height: 28px;
@@ -1755,6 +1797,19 @@ button:disabled {
   padding: 10px 12px;
   color: #9aa8bc;
   font-style: italic;
+}
+
+.schema-field-lead {
+  display: grid;
+  place-items: center;
+  color: #8aa0bb;
+}
+
+.schema-field-trail {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
 }
 
 .schema-field-icons {
@@ -2813,8 +2868,23 @@ button:disabled {
   stroke: #6387e8;
 }
 
-.app-frame[data-theme="light"] .relation-layer marker path {
+.app-frame[data-theme="light"] .relation-layer marker path,
+.app-frame[data-theme="light"] .relation-dot {
   fill: #6387e8;
+}
+
+.app-frame[data-theme="light"] .schema-field-lead {
+  color: #6d7d91;
+}
+
+.app-frame[data-theme="light"] .schema-open-button {
+  color: #6d7d91;
+}
+
+.app-frame[data-theme="light"] .schema-open-button:hover {
+  border-color: #9eb2d4;
+  background: #eef5ff;
+  color: #1e2d43;
 }
 
 .app-frame[data-theme="light"] .schema-card {

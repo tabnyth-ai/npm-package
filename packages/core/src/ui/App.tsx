@@ -74,6 +74,11 @@ export function App() {
     setSelected(container);
   }
 
+  function handleOpenContainer(container: ContainerInfo): void {
+    handleSelectContainer(container);
+    setActiveView("browser");
+  }
+
   function handleInsertAiQuery(query: string): void {
     setAiInsertedQuery(query);
     setQueryResult(null);
@@ -170,6 +175,7 @@ export function App() {
             containers={containerState.containers}
             selectedName={selected?.name}
             onSelect={handleSelectContainer}
+            onOpen={handleOpenContainer}
           />
         </div>
       ) : null}
