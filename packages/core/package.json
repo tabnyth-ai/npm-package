@@ -1,8 +1,33 @@
 {
   "name": "tabnyth",
-  "version": "0.1.8",
-  "description": "Small local database studio for MongoDB and Postgres.",
+  "version": "0.1.9",
+  "description": "Local-first database studio for MongoDB and Postgres. Point it at your DB and get a localhost UI to browse, search, query, edit, and visualize your data. Read-only by default.",
   "type": "module",
+  "homepage": "https://tabnyth.cloud",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tabnyth-ai/npm-package.git"
+  },
+  "bugs": {
+    "url": "https://github.com/tabnyth-ai/npm-package/issues"
+  },
+  "author": "tabnyth-ai",
+  "license": "ISC",
+  "keywords": [
+    "database",
+    "database-studio",
+    "database-gui",
+    "db",
+    "mongodb",
+    "mongo",
+    "postgres",
+    "postgresql",
+    "cli",
+    "data-browser",
+    "sql",
+    "admin",
+    "developer-tools"
+  ],
   "bin": {
     "tabnyth": "dist/cli/index.js"
   },

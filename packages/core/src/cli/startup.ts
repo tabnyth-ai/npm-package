@@ -39,6 +39,17 @@ export interface StartupSummary {
   output?: { write(chunk: string): unknown };
 }
 
+const ANSI_RESET = "\x1B[0m";
+const ANSI_GREEN = "\x1B[32m";
+const ANSI_YELLOW = "\x1B[33m";
+
+function paint(code: string, text: string): string {
+  return process.env.NO_COLOR ? text : `${code}${text}${ANSI_RESET}`;
+}
+
+const green = (text: string): string => paint(ANSI_GREEN, text);
+const yellow = (text: string): string => paint(ANSI_YELLOW, text);
+
 const modeChoices: ModeChoice[] = [
   {
     value: "view",
@@ -74,11 +85,11 @@ export function writeStartupSummary({ databaseUrl, licenseKey, mode, output = de
   output.write(`Database URL being used: ${formatDatabaseUrl(databaseUrl)}\n`);
 
   if (licenseKey?.trim()) {
-    output.write(`Using license key: ${maskLicenseKey(licenseKey)}\n`);
+    output.write(`${green(`Using license key: ${maskLicenseKey(licenseKey)}`)}\n`);
     return;
   }
 
-  output.write("To access full potential of Tabnyth, enter your license key.\n");
+  output.write(`${yellow("To access full potential of Tabnyth, enter your license key.")}\n`);
 }
 
 export function formatStartupMode(mode: StartupMode): string {
@@ -129,8 +140,10 @@ async function promptForStartupMode(input: PromptInput, output: PromptOutput): P
       output.write("Select Tabnyth startup mode:\n");
 
       for (const [index, choice] of modeChoices.entries()) {
-        const marker = index === selectedIndex ? ">" : " ";
-        output.write(`${marker} ${choice.label} - ${choice.description}\n`);
+        const isSelected = index === selectedIndex;
+        const marker = isSelected ? ">" : " ";
+        const line = `${marker} ${choice.label} - ${choice.description}`;
+        output.write(`${isSelected ? green(line) : line}\n`);
       }
 
       output.write("Use arrow keys, then press Enter.\n");
