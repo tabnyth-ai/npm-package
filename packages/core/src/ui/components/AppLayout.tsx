@@ -10,6 +10,7 @@ import { QuickLoader } from "./QuickLoader";
 export type StudioView = "query" | "browser" | "visualizer";
 
 interface AppLayoutProps {
+  aiOpen?: boolean;
   activeView: StudioView;
   sidebar: ComponentChildren;
   children: ComponentChildren;
@@ -18,6 +19,7 @@ interface AppLayoutProps {
   searchResults?: SearchResult[];
   searchValue?: string;
   onInsertAiQuery?(query: string): void;
+  onAiOpenChange?(open: boolean): void;
   onViewChange(view: StudioView): void;
   onSearchChange?(value: string): void;
   onSearchResultSelect?(result: SearchResult): void;
@@ -28,8 +30,10 @@ const tabs: Array<{ label: string; view: StudioView }> = [
   { label: "Data Browser", view: "browser" },
   { label: "Visualizer", view: "visualizer" }
 ];
+const themeStorageKey = "tabnyth-studio-theme";
 
 export function AppLayout({
+  aiOpen: controlledAiOpen,
   activeView,
   sidebar,
   children,
@@ -38,13 +42,14 @@ export function AppLayout({
   searchResults = [],
   searchValue = "",
   onInsertAiQuery,
+  onAiOpenChange,
   onViewChange,
   onSearchChange,
   onSearchResultSelect
 }: AppLayoutProps) {
   const [theme, setTheme] = useState<"dark" | "light">(readInitialTheme);
   const [searchOpen, setSearchOpen] = useState(false);
-  const [aiOpen, setAiOpen] = useState(false);
+  const [internalAiOpen, setInternalAiOpen] = useState(false);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [creditBalance, setCreditBalance] = useState<number | null>(null);
   const [creditError, setCreditError] = useState<string | null>(null);
@@ -52,9 +57,20 @@ export function AppLayout({
   const searchInputRef = useRef<HTMLInputElement>(null);
   const nextTheme = theme === "dark" ? "light" : "dark";
   const trimmedSearch = searchValue.trim();
+  const aiOpen = controlledAiOpen ?? internalAiOpen;
+
+  function setAiOpen(open: boolean | ((current: boolean) => boolean)): void {
+    const nextOpen = typeof open === "function" ? open(aiOpen) : open;
+
+    if (controlledAiOpen === undefined) {
+      setInternalAiOpen(nextOpen);
+    }
+
+    onAiOpenChange?.(nextOpen);
+  }
 
   useEffect(() => {
-    localStorage.setItem("tabnyth-theme", theme);
+    localStorage.setItem(themeStorageKey, theme);
   }, [theme]);
 
   useEffect(() => {
@@ -179,7 +195,7 @@ export function AppLayout({
         <aside class={sidebarCollapsed ? "sidebar collapsed" : "sidebar"}>
           <button
             aria-label={sidebarCollapsed ? "Expand tables sidebar" : "Collapse tables sidebar"}
-            class="icon-button bordered sidebar-collapse-button"
+            class="icon-button sidebar-collapse-button"
             type="button"
             onClick={() => setSidebarCollapsed((collapsed) => !collapsed)}
           >
@@ -256,8 +272,8 @@ export function AppLayout({
 }
 
 function readInitialTheme(): "dark" | "light" {
-  const stored = localStorage.getItem("tabnyth-theme");
-  return stored === "dark" ? "dark" : "light";
+  const stored = localStorage.getItem(themeStorageKey);
+  return stored === "light" ? "light" : "dark";
 }
 
 function SearchShadowLoader() {

@@ -7,12 +7,18 @@ describe("postgres introspection", () => {
   it("maps table rows", async () => {
     const pool = {
       async query() {
-        return { rows: [{ table_schema: "public", table_name: "users" }] };
+        return {
+          rows: [
+            { table_schema: "public", table_name: "users" },
+            { table_schema: "billing", table_name: "invoices" }
+          ]
+        };
       }
     } as unknown as Pool;
 
     await expect(listTables(pool)).resolves.toEqual([
-      { name: "public.users", schema: "public", displayName: "public.users", type: "table" }
+      { name: "public.users", schema: "public", displayName: "users", type: "table" },
+      { name: "billing.invoices", schema: "billing", displayName: "billing.invoices", type: "table" }
     ]);
   });
 

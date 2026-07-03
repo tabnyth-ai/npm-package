@@ -106,6 +106,30 @@ describe("createServer", () => {
     expect(response.status).toBe(200);
     expect(await response.json()).toMatchObject({ result: { rowCount: 1 } });
   });
+
+  it("passes inserted rows to the adapter in write mode", async () => {
+    const app = createServer({
+      adapter: createFakeAdapter(),
+      config: {
+        adapterName: "postgres",
+        allowWrite: true,
+        defaultLimit: 100,
+        maxLimit: 1000,
+        timeoutMs: 10000
+      }
+    });
+
+    const response = await app.request("/api/rows", {
+      method: "POST",
+      body: JSON.stringify({
+        container: "public.users",
+        rows: [{ name: "Ada" }]
+      })
+    });
+
+    expect(response.status).toBe(200);
+    expect(await response.json()).toMatchObject({ result: { rowCount: 1, rows: [{ id: 2 }] } });
+  });
 });
 
 function createFakeAdapter(): DatabaseAdapter {
@@ -127,6 +151,9 @@ function createFakeAdapter(): DatabaseAdapter {
     },
     async search() {
       return [{ kind: "table", title: "Table Name: public.users", description: "Matched table.", containerName: "public.users" }];
+    },
+    async insertRows() {
+      return { columns: ["id"], rows: [{ id: 2 }], rowCount: 1, durationMs: 1 };
     },
     async updateCells() {
       return { columns: ["id"], rows: [{ id: 1 }], rowCount: 1, durationMs: 1 };

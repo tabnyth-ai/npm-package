@@ -17,10 +17,12 @@ export async function listTables(pool: Pool): Promise<ContainerInfo[]> {
     `
   );
 
+  // Hide the default schema prefix in labels; non-public schemas stay
+  // qualified so same-named tables remain distinguishable.
   return result.rows.map((row) => ({
     name: `${row.table_schema}.${row.table_name}`,
     schema: row.table_schema,
-    displayName: `${row.table_schema}.${row.table_name}`,
+    displayName: row.table_schema === "public" ? row.table_name : `${row.table_schema}.${row.table_name}`,
     type: "table"
   }));
 }
@@ -57,9 +59,11 @@ async function listColumns(pool: Pool, schema: string, table: string): Promise<C
     column_name: string;
     data_type: string;
     is_nullable: string;
+    column_default: string | null;
+    is_identity: string;
   }>(
     `
-      select column_name, data_type, is_nullable
+      select column_name, data_type, is_nullable, column_default, is_identity
       from information_schema.columns
       where table_schema = $1
         and table_name = $2
@@ -68,11 +72,18 @@ async function listColumns(pool: Pool, schema: string, table: string): Promise<C
     [schema, table]
   );
 
-  return result.rows.map((row) => ({
-    name: row.column_name,
-    type: row.data_type,
-    nullable: row.is_nullable === "YES"
-  }));
+  return result.rows.map((row) => {
+    const defaultValue = row.column_default ?? undefined;
+    const generated = row.is_identity === "YES" || Boolean(defaultValue?.startsWith("nextval("));
+
+    return {
+      name: row.column_name,
+      type: row.data_type,
+      nullable: row.is_nullable === "YES",
+      ...(defaultValue ? { defaultValue } : {}),
+      ...(generated ? { generated } : {})
+    };
+  });
 }
 
 async function listPrimaryKeys(pool: Pool, schema: string, table: string): Promise<Set<string>> {

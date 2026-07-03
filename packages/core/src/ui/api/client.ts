@@ -1,6 +1,9 @@
 import type {
   BrowseInput,
+  ConnectDatabaseInput,
+  ConnectDatabaseResponse,
   ContainersResponse,
+  InsertRowsInput,
   NythAiChatRequest,
   NythAiCreditsResponse,
   NythAiResultResponse,
@@ -18,6 +21,13 @@ export async function getMeta(): Promise<StudioMeta> {
 
 export async function getContainers(): Promise<ContainersResponse> {
   return request<ContainersResponse>("/api/containers");
+}
+
+export async function connectDatabase(input: ConnectDatabaseInput): Promise<ConnectDatabaseResponse> {
+  return request<ConnectDatabaseResponse>("/api/connect", {
+    method: "POST",
+    body: JSON.stringify(input)
+  });
 }
 
 export async function getContainerStructure(name: string): Promise<StructureResponse> {
@@ -44,6 +54,13 @@ export async function runQuery(input: QueryInput): Promise<ResultResponse> {
 
 export async function updateCells(input: UpdateCellsInput): Promise<ResultResponse> {
   return request<ResultResponse>("/api/cells", {
+    method: "POST",
+    body: JSON.stringify(input)
+  });
+}
+
+export async function insertRows(input: InsertRowsInput): Promise<ResultResponse> {
+  return request<ResultResponse>("/api/rows", {
     method: "POST",
     body: JSON.stringify(input)
   });

@@ -21,6 +21,8 @@ export interface ColumnInfo {
   type: string;
   nullable?: boolean;
   primaryKey?: boolean;
+  defaultValue?: string | null;
+  generated?: boolean;
   foreignKey?: ForeignKeyInfo;
 }
 
@@ -36,11 +38,29 @@ export interface ContainerStructure {
   sample?: Record<string, unknown>;
 }
 
+export type BrowseFilterOperator =
+  | "eq"
+  | "neq"
+  | "gt"
+  | "gte"
+  | "lt"
+  | "lte"
+  | "contains"
+  | "isNull"
+  | "isNotNull";
+
+export interface BrowseFilter {
+  column: string;
+  operator: BrowseFilterOperator;
+  value?: unknown;
+}
+
 export interface BrowseInput {
   container: string;
   schema?: string;
   limit?: number;
   offset?: number;
+  filters?: BrowseFilter[];
 }
 
 export interface QueryInput {
@@ -91,6 +111,12 @@ export interface UpdateCellsInput {
   updates: CellUpdate[];
 }
 
+export interface InsertRowsInput {
+  container: string;
+  schema?: string;
+  rows: Record<string, unknown>[];
+}
+
 export interface DatabaseAdapter {
   kind: AdapterKind;
   connect(): Promise<void>;
@@ -100,6 +126,7 @@ export interface DatabaseAdapter {
   browse(input: BrowseInput): Promise<QueryResult>;
   runQuery(input: QueryInput): Promise<QueryResult>;
   search(input: SearchInput): Promise<SearchResult[]>;
+  insertRows(input: InsertRowsInput): Promise<QueryResult>;
   updateCells(input: UpdateCellsInput): Promise<QueryResult>;
 }
 

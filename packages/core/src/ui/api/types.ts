@@ -1,8 +1,12 @@
 import type {
+  BrowseFilter,
+  BrowseFilterOperator,
   BrowseInput,
   CellUpdate,
+  ColumnInfo,
   ContainerInfo,
   ContainerStructure,
+  InsertRowsInput,
   QueryInput,
   QueryResult,
   SearchResult,
@@ -32,6 +36,16 @@ export interface StructureResponse {
 
 export interface SearchResponse {
   results: SearchResult[];
+}
+
+export interface ConnectDatabaseInput {
+  databaseUrl: string;
+  mode: "view" | "edit";
+}
+
+export interface ConnectDatabaseResponse {
+  meta: StudioMeta;
+  containers: ContainerInfo[];
 }
 
 export interface NythAiChatRequest {
@@ -68,10 +82,14 @@ export interface NythAiCreditsResponse {
 }
 
 export type {
+  BrowseFilter,
+  BrowseFilterOperator,
   BrowseInput,
   CellUpdate,
+  ColumnInfo,
   ContainerInfo,
   ContainerStructure,
+  InsertRowsInput,
   QueryInput,
   QueryResult,
   SearchResult,

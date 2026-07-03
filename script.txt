@@ -1,3 +1,0 @@
-npm i -D /Users/gauravtiwari/coding.nosync/projects/tabnyth/package/packages/core  
-npm i -D /Users/gauravtiwari/coding.nosync/projects/tabnyth/package/packages/postgres
-npm run studio

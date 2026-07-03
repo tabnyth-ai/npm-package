@@ -33,6 +33,9 @@ describe("loadAdapter", () => {
           async search() {
             return [];
           },
+          async insertRows() {
+            return { columns: [], rows: [], rowCount: 0, durationMs: 0 };
+          },
           async updateCells() {
             return { columns: [], rows: [], rowCount: 0, durationMs: 0 };
           }
