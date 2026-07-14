@@ -3,6 +3,7 @@ import type {
   BrowseInput,
   CreateAdapterOptions,
   DatabaseAdapter,
+  InsertRowsInput,
   QueryInput,
   SearchInput,
   UpdateCellsInput
@@ -10,6 +11,7 @@ import type {
 
 import { browseCollection } from "./browse";
 import { createMongoConnection } from "./client";
+import { insertMongoRows } from "./insertRows";
 import { describeCollection, listCollections } from "./introspection";
 import { runMongoQuery } from "./query";
 import { searchMongo } from "./search";
@@ -55,6 +57,10 @@ class MongoDbAdapter implements DatabaseAdapter {
 
   search(input: SearchInput) {
     return searchMongo(this.db, input);
+  }
+
+  insertRows(input: InsertRowsInput) {
+    return insertMongoRows(this.db, input);
   }
 
   updateCells(input: UpdateCellsInput) {

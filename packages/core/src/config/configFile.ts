@@ -4,6 +4,7 @@ import { dirname, resolve } from "node:path";
 export const CONFIG_FILE_NAME = "tabnyth.config.json";
 export const ENV_FILE_NAME = ".env";
 export const TABNYTH_KEY_ENV_NAME = "TABNYTH_KEY";
+export const TABNYTH_API_URL_ENV_NAME = "TABNYTH_API_URL";
 export const TABNYTH_KEY_COMMENT =
   "# Paste your Tabnyth license key here or get it generated from https://tabnyth.cloud/docs/generate-license-key";
 
@@ -49,6 +50,32 @@ export async function hasTabnythEnvEntryInFile(projectRoot = process.cwd()): Pro
   return hasTabnythEnvEntry(await readTextFileIfExists(resolveEnvPath(projectRoot)));
 }
 
+/**
+ * Write a license key value into the project `.env`. Updates the existing
+ * `TABNYTH_KEY=` line in place when present, otherwise appends a fresh entry.
+ */
+export async function writeTabnythKeyToEnvFile(projectRoot = process.cwd(), key: string): Promise<string> {
+  const envPath = resolveEnvPath(projectRoot);
+  const raw = await readTextFileIfExists(envPath);
+  const value = normalizeLicenseKey(key);
+
+  await mkdir(dirname(envPath), { recursive: true });
+
+  if (hasTabnythEnvEntry(raw)) {
+    const updated = raw.replace(
+      new RegExp(`^(\\s*${TABNYTH_KEY_ENV_NAME}\\s*=).*$`, "m"),
+      `$1${value}`
+    );
+    await writeFile(envPath, updated, "utf8");
+    return envPath;
+  }
+
+  const prefix = raw && !raw.endsWith("\n") ? "\n" : "";
+  const spacer = raw && raw.trim() ? "\n" : "";
+  await appendFile(envPath, `${prefix}${spacer}${TABNYTH_KEY_COMMENT}\n${TABNYTH_KEY_ENV_NAME}=${value}\n`, "utf8");
+  return envPath;
+}
+
 export async function readTabnythKeyFromEnvFile(projectRoot = process.cwd()): Promise<string> {
   const raw = await readTextFileIfExists(resolveEnvPath(projectRoot));
   return normalizeLicenseKey(readEnvValue(raw, TABNYTH_KEY_ENV_NAME));
@@ -73,6 +100,20 @@ export async function readTabnythLicenseKey(
   // Backward-compatible fallback for users who already have the old config.
   const legacyConfig = await readTabnythConfig(projectRoot);
   return normalizeLicenseKey(legacyConfig.licenseKey);
+}
+
+export async function readTabnythApiBaseUrl(
+  projectRoot = process.cwd(),
+  env: NodeJS.ProcessEnv = process.env
+): Promise<string> {
+  const envValue = normalizeLicenseKey(env[TABNYTH_API_URL_ENV_NAME]);
+
+  if (envValue) {
+    return envValue;
+  }
+
+  const raw = await readTextFileIfExists(resolveEnvPath(projectRoot));
+  return normalizeLicenseKey(readEnvValue(raw, TABNYTH_API_URL_ENV_NAME));
 }
 
 export async function readTabnythConfig(projectRoot = process.cwd()): Promise<TabnythConfig> {

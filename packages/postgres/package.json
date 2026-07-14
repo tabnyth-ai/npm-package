@@ -1,6 +1,6 @@
 {
   "name": "@tabnyth/postgres",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "Postgres adapter for Tabnyth Studio.",
   "type": "module",
   "exports": {
@@ -23,11 +23,11 @@
   },
   "devDependencies": {
     "@types/pg": "^8.11.10",
-    "tabnyth": "0.1.1",
+    "tabnyth": "0.2.0",
     "tsup": "^8.3.5"
   },
   "peerDependencies": {
-    "tabnyth": "^0.1.1"
+    "tabnyth": "^0.2.0"
   },
   "engines": {
     "node": ">=20.11"

@@ -1,8 +1,33 @@
 {
   "name": "tabnyth",
-  "version": "0.1.3",
-  "description": "Small local database studio for MongoDB and Postgres.",
+  "version": "0.2.0",
+  "description": "Local-first database studio for MongoDB and Postgres. Point it at your DB and get a localhost UI to browse, search, query, edit, and visualize your data. Read-only by default.",
   "type": "module",
+  "homepage": "https://tabnyth.cloud",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tabnyth-ai/npm-package.git"
+  },
+  "bugs": {
+    "url": "https://github.com/tabnyth-ai/npm-package/issues"
+  },
+  "author": "tabnyth-ai",
+  "license": "ISC",
+  "keywords": [
+    "database",
+    "database-studio",
+    "database-gui",
+    "db",
+    "mongodb",
+    "mongo",
+    "postgres",
+    "postgresql",
+    "cli",
+    "data-browser",
+    "sql",
+    "admin",
+    "developer-tools"
+  ],
   "bin": {
     "tabnyth": "dist/cli/index.js"
   },
@@ -51,9 +76,11 @@
     "@preact/preset-vite": "^2.9.1",
     "@testing-library/preact": "^3.2.4",
     "codemirror": "^6.0.1",
-    "json5": "^2.2.3",
+    "dompurify": "^3.4.11",
     "jsdom": "^25.0.1",
+    "json5": "^2.2.3",
     "lucide-preact": "^1.21.0",
+    "marked": "^18.0.5",
     "preact": "^10.25.3",
     "tsup": "^8.3.5",
     "vite": "^6.0.5"

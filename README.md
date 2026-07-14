@@ -34,6 +34,29 @@ From an environment variable:
 npx tabnyth --env DATABASE_URL
 ```
 
+From a project env file:
+
+```json
+{
+  "scripts": {
+    "tabnyth": "npx tabnyth .env.dev DATABASE_URL"
+  }
+}
+```
+
+```bash
+npm run tabnyth
+```
+
+Interactive startup asks you to choose a mode:
+
+```txt
+View mode only - this will allow you to see data in your database
+Edit mode - this will allow you to make edits
+```
+
+Use the arrow keys to pick a mode and press Enter.
+
 Enable write operations explicitly:
 
 ```bash
@@ -61,6 +84,8 @@ Inline Data Browser edits require `--allow-write`. Postgres tables must have a p
 ```txt
 --url <url>              Database URL
 --env <name>             Env var name, default DATABASE_URL
+--env-file <path>        Env file to load, e.g. .env.dev
+--mode <view|edit>       Skip the prompt and choose a startup mode
 --adapter <name>         postgres or mongodb, optional override
 --host <host>            Default 127.0.0.1
 --port <port>            Default 5555

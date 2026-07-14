@@ -3,6 +3,7 @@ import type {
   BrowseInput,
   CreateAdapterOptions,
   DatabaseAdapter,
+  InsertRowsInput,
   QueryInput,
   SearchInput,
   UpdateCellsInput
@@ -10,6 +11,7 @@ import type {
 
 import { browseTable } from "./browse";
 import { createPostgresPool } from "./client";
+import { insertTableRows } from "./insertRows";
 import { describeTable, listTables } from "./introspection";
 import { runSqlQuery } from "./query";
 import { searchPostgres } from "./search";
@@ -51,6 +53,10 @@ class PostgresAdapter implements DatabaseAdapter {
 
   search(input: SearchInput) {
     return searchPostgres(this.pool, input);
+  }
+
+  insertRows(input: InsertRowsInput) {
+    return insertTableRows(this.pool, input);
   }
 
   updateCells(input: UpdateCellsInput) {

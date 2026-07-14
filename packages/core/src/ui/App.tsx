@@ -1,7 +1,7 @@
 import { useEffect, useState } from "preact/hooks";
 import { Lock, Unlock } from "lucide-preact";
 
-import type { ContainerInfo, QueryResult, SearchResult } from "./api/types";
+import type { BrowseFilter, ConnectDatabaseResponse, ContainerInfo, QueryResult, SearchResult } from "./api/types";
 import { AppLayout, type StudioView } from "./components/AppLayout";
 import { ErrorMessage } from "./components/ErrorMessage";
 import { LoadingState } from "./components/LoadingState";
@@ -23,8 +23,11 @@ export function App() {
   const [limit, setLimit] = useState(100);
   const [searchValue, setSearchValue] = useState("");
   const [queryResult, setQueryResult] = useState<QueryResult | null>(null);
+  const [queryResultExpanded, setQueryResultExpanded] = useState(false);
+  const [aiOpen, setAiOpen] = useState(false);
   const [aiInsertedQuery, setAiInsertedQuery] = useState<string | null>(null);
-  const browseState = useBrowse(selected, limit, page);
+  const [browseFilters, setBrowseFilters] = useState<BrowseFilter[]>([]);
+  const browseState = useBrowse(selected, limit, page, browseFilters);
   const searchState = useSearchResources(searchValue);
 
   useEffect(() => {
@@ -36,7 +39,14 @@ export function App() {
   useEffect(() => {
     setPage(1);
     setQueryResult(null);
+    setQueryResultExpanded(false);
   }, [selected?.name, limit]);
+
+  useEffect(() => {
+    if (activeView !== "query") {
+      setQueryResultExpanded(false);
+    }
+  }, [activeView]);
 
   useEffect(() => {
     if (!selected && containerState.containers.length > 0) {
@@ -71,18 +81,50 @@ export function App() {
 
   function handleSelectContainer(container: ContainerInfo): void {
     setQueryResult(null);
+
+    if (container.name !== selected?.name) {
+      setBrowseFilters([]);
+    }
+
     setSelected(container);
+  }
+
+  function handleFiltersChange(filters: BrowseFilter[]): void {
+    setBrowseFilters(filters);
+    setPage(1);
+  }
+
+  function handleOpenContainer(container: ContainerInfo): void {
+    handleSelectContainer(container);
+    setActiveView("browser");
   }
 
   function handleInsertAiQuery(query: string): void {
     setAiInsertedQuery(query);
     setQueryResult(null);
+    setQueryResultExpanded(false);
+    setActiveView("query");
+  }
+
+  function handleConnectionConnected(response: ConnectDatabaseResponse): void {
+    metaState.replace(response.meta);
+    containerState.replace(response.containers);
+    setSelected(response.containers[0] ?? null);
+    setLimit(response.meta.defaultLimit);
+    setPage(1);
+    setBrowseFilters([]);
+    setSearchValue("");
+    setQueryResult(null);
+    setQueryResultExpanded(false);
+    setAiInsertedQuery(null);
     setActiveView("query");
   }
 
   return (
     <AppLayout
+      aiOpen={aiOpen}
       activeView={activeView}
+      onAiOpenChange={setAiOpen}
       onViewChange={setActiveView}
       searchError={searchState.error}
       searchLoading={searchState.loading}
@@ -97,6 +139,7 @@ export function App() {
           containers={containerState.containers}
           selectedName={selected?.name}
           loading={containerState.loading}
+          onConnected={handleConnectionConnected}
           onSelect={handleSelectContainer}
         />
       }
@@ -112,18 +155,24 @@ export function App() {
       <ErrorMessage message={containerState.error} />
 
       {activeView === "query" ? (
-        <div class="workspace-grid">
+        <div class={queryResultExpanded ? "query-workspace result-expanded" : "query-workspace"}>
           <QueryPanel
             insertedQuery={aiInsertedQuery}
             meta={metaState.meta}
             selected={selected}
             onInsertedQueryConsumed={() => setAiInsertedQuery(null)}
-            onRunResult={setQueryResult}
+            onRunResult={(result) => {
+              setQueryResult(result);
+              setQueryResultExpanded(false);
+            }}
+            onOpenNythAi={() => setAiOpen(true)}
           />
           <BrowsePanel
             allowWrite={metaState.meta.allowWrite}
             container={selected}
             enableCellEditing={false}
+            expanded={queryResultExpanded}
+            filters={browseFilters}
             kind={metaState.meta.kind}
             title={activeTableTitle}
             result={activeTableResult}
@@ -135,6 +184,8 @@ export function App() {
             showControls={!queryResult}
             status={activeTableStatus}
             totalPages={queryResult ? 1 : totalPages}
+            onFiltersChange={handleFiltersChange}
+            onToggleExpanded={() => setQueryResultExpanded((expanded) => !expanded)}
             onLimitChange={setLimit}
             onPageChange={setPage}
             onRefresh={() => void browseState.refresh()}
@@ -148,6 +199,7 @@ export function App() {
             allowWrite={metaState.meta.allowWrite}
             container={selected}
             enableCellEditing
+            filters={browseFilters}
             kind={metaState.meta.kind}
             title={selectedTitle}
             result={browseState.result}
@@ -157,6 +209,7 @@ export function App() {
             maxLimit={metaState.meta.maxLimit}
             page={page}
             totalPages={totalPages}
+            onFiltersChange={handleFiltersChange}
             onLimitChange={setLimit}
             onPageChange={setPage}
             onRefresh={() => void browseState.refresh()}
@@ -170,6 +223,7 @@ export function App() {
             containers={containerState.containers}
             selectedName={selected?.name}
             onSelect={handleSelectContainer}
+            onOpen={handleOpenContainer}
           />
         </div>
       ) : null}
@@ -180,5 +234,5 @@ export function App() {
 
 function formatQueryResultStatus(result: QueryResult): string {
   const rowLabel = result.rowCount === 1 ? "row" : "rows";
-  return `${result.rowCount} ${rowLabel} · ${result.durationMs} ms`;
+  return `${result.rowCount} ${rowLabel} returned in ${result.durationMs} ms`;
 }

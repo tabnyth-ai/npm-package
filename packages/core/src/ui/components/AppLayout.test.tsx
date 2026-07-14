@@ -29,11 +29,11 @@ describe("AppLayout", () => {
       </AppLayout>
     );
 
-    expect(screen.getByRole("button", { name: "Switch to dark theme" })).toBeTruthy();
-
-    fireEvent.click(screen.getByRole("button", { name: "Switch to dark theme" }));
-
     expect(screen.getByRole("button", { name: "Switch to light theme" })).toBeTruthy();
+
+    fireEvent.click(screen.getByRole("button", { name: "Switch to light theme" }));
+
+    expect(screen.getByRole("button", { name: "Switch to dark theme" })).toBeTruthy();
     expect(screen.queryByRole("button", { name: "Notifications" })).toBeNull();
     expect(screen.queryByRole("button", { name: "Account" })).toBeNull();
   });
@@ -53,5 +53,19 @@ describe("AppLayout", () => {
     expect(onViewChange).toHaveBeenNthCalledWith(1, "browser");
     expect(onViewChange).toHaveBeenNthCalledWith(2, "visualizer");
     expect(screen.queryByRole("button", { name: "Logs" })).toBeNull();
+  });
+
+  it("notifies when the Nyth AI drawer should open", () => {
+    const onAiOpenChange = vi.fn();
+
+    render(
+      <AppLayout activeView="query" aiOpen={false} sidebar={<div>Sidebar</div>} onAiOpenChange={onAiOpenChange} onViewChange={() => {}}>
+        <div>Content</div>
+      </AppLayout>
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: "Ask Nyth AI" }));
+
+    expect(onAiOpenChange).toHaveBeenCalledWith(true);
   });
 });

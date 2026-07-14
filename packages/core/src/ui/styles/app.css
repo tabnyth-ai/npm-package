@@ -1,10 +1,128 @@
+@font-face {
+  font-family: Geist;
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("/assets/fonts/fef07dbb0973bf53-s.3p2_lha1f2xer.woff2") format("woff2");
+  unicode-range: U+460-52F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+
+@font-face {
+  font-family: Geist;
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("/assets/fonts/8a480f0b521d4e75-s.1qq4vpdcun5oj.woff2") format("woff2");
+  unicode-range: U+301, U+400-45F, U+490-491, U+4B0-4B1, U+2116;
+}
+
+@font-face {
+  font-family: Geist;
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("/assets/fonts/53b9e256198e5412-s.390ncx5urfkfu.woff2") format("woff2");
+  unicode-range: U+102-103, U+110-111, U+128-129, U+168-169, U+1A0-1A1, U+1AF-1B0, U+300-301, U+303-304, U+308-309, U+323, U+329, U+1EA0-1EF9, U+20AB;
+}
+
+@font-face {
+  font-family: Geist;
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("/assets/fonts/7178b3e590c64307-s.21jp631_3pja2.woff2") format("woff2");
+  unicode-range: U+100-2BA, U+2BD-2C5, U+2C7-2CC, U+2CE-2D7, U+2DD-2FF, U+304, U+308, U+329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+  font-family: Geist;
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("/assets/fonts/caa3a2e1cccd8315-s.p.0wgildi0cnwt9.woff2") format("woff2");
+  unicode-range: U+??, U+131, U+152-153, U+2BB-2BC, U+2C6, U+2DA, U+2DC, U+304, U+308, U+329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: Geist Fallback;
+  src: local(Arial);
+  ascent-override: 95.94%;
+  descent-override: 28.16%;
+  line-gap-override: 0%;
+  size-adjust: 104.76%;
+}
+
+@font-face {
+  font-family: Geist Mono;
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("/assets/fonts/5ce348bf30bf5439-s.31988l_ccedte.woff2") format("woff2");
+  unicode-range: U+460-52F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+
+@font-face {
+  font-family: Geist Mono;
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("/assets/fonts/4fa387ec64143e14-s.2tuy5pz7dlieh.woff2") format("woff2");
+  unicode-range: U+301, U+400-45F, U+490-491, U+4B0-4B1, U+2116;
+}
+
+@font-face {
+  font-family: Geist Mono;
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("/assets/fonts/6306c77e7c8268e4-s.2dbetqa9o8jxf.woff2") format("woff2");
+  unicode-range: U+2000-2001, U+2004-2008, U+200A, U+23B8-23BD, U+2500-259F;
+}
+
+@font-face {
+  font-family: Geist Mono;
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("/assets/fonts/7d817b4c03b0c5f1-s.1uyisp29ctx0d.woff2") format("woff2");
+  unicode-range: U+102-103, U+110-111, U+128-129, U+168-169, U+1A0-1A1, U+1AF-1B0, U+300-301, U+303-304, U+308-309, U+323, U+329, U+1EA0-1EF9, U+20AB;
+}
+
+@font-face {
+  font-family: Geist Mono;
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("/assets/fonts/bbc41e54d2fcbd21-s.1rgnod-3esatf.woff2") format("woff2");
+  unicode-range: U+100-2BA, U+2BD-2C5, U+2C7-2CC, U+2CE-2D7, U+2DD-2FF, U+304, U+308, U+329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+  font-family: Geist Mono;
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("/assets/fonts/797e433ab948586e-s.p.0r6juujl39pe6.woff2") format("woff2");
+  unicode-range: U+??, U+131, U+152-153, U+2BB-2BC, U+2C6, U+2DA, U+2DC, U+304, U+308, U+329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: Geist Mono Fallback;
+  src: local(Arial);
+  ascent-override: 74.67%;
+  descent-override: 21.92%;
+  line-gap-override: 0%;
+  size-adjust: 134.59%;
+}
+
 :root {
   color: #eefcf8;
   background: #030807;
-  font-family:
-    Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-family: var(--font-geist-sans);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
+  --font-geist-sans: "Geist", "Geist Fallback", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-geist-mono: "Geist Mono", "Geist Mono Fallback", "SFMono-Regular", Consolas, "Liberation Mono", monospace;
   --page-bg: #030807;
   --surface-0: #050908;
   --surface-1: #071211;
@@ -650,6 +768,147 @@ button:disabled {
   line-height: 1.55;
 }
 
+/* Assistant markdown bubble — mirrors `.ai-message p` but renders parsed
+   markdown (bold, headings, lists, links, code) instead of raw text. */
+.ai-message .ai-md {
+  margin: 0;
+  border: 1px solid #273950;
+  border-radius: 8px;
+  background: #162030;
+  color: #d9e5f7;
+  padding: 11px 12px;
+  font-size: 13px;
+  line-height: 1.55;
+  word-break: break-word;
+}
+
+.ai-md > :first-child {
+  margin-top: 0;
+}
+
+.ai-md > :last-child {
+  margin-bottom: 0;
+}
+
+.ai-md p {
+  margin: 0 0 8px;
+}
+
+.ai-md strong {
+  font-weight: 800;
+  color: #eaf1fb;
+}
+
+.ai-md em {
+  font-style: italic;
+}
+
+.ai-md a {
+  color: #5eead4;
+  text-decoration: underline;
+}
+
+.ai-md h1,
+.ai-md h2,
+.ai-md h3,
+.ai-md h4 {
+  margin: 12px 0 6px;
+  font-weight: 800;
+  line-height: 1.3;
+  color: #eaf1fb;
+}
+
+.ai-md h1 {
+  font-size: 16px;
+}
+
+.ai-md h2 {
+  font-size: 15px;
+}
+
+.ai-md h3 {
+  font-size: 14px;
+}
+
+.ai-md h4 {
+  font-size: 13px;
+}
+
+.ai-md ul,
+.ai-md ol {
+  margin: 4px 0 8px;
+  padding-left: 20px;
+}
+
+.ai-md ul {
+  list-style: disc;
+}
+
+.ai-md ol {
+  list-style: decimal;
+}
+
+.ai-md li {
+  margin: 3px 0;
+}
+
+.ai-md li > ul,
+.ai-md li > ol {
+  margin: 3px 0 4px;
+}
+
+.ai-md code {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 12px;
+  background: #0b111c;
+  border: 1px solid #273950;
+  padding: 1px 5px;
+  border-radius: 4px;
+  color: #c6f6ef;
+}
+
+.ai-md pre {
+  margin: 8px 0;
+  padding: 10px;
+  background: #0b111c;
+  border: 1px solid #273950;
+  border-radius: 7px;
+  overflow: auto;
+}
+
+.ai-md pre code {
+  border: none;
+  background: transparent;
+  padding: 0;
+}
+
+.ai-md blockquote {
+  margin: 8px 0;
+  padding-left: 10px;
+  border-left: 3px solid #273950;
+  color: #aebfd6;
+}
+
+.ai-md hr {
+  border: none;
+  border-top: 1px solid #273950;
+  margin: 10px 0;
+}
+
+.ai-md table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 8px 0;
+  font-size: 12px;
+}
+
+.ai-md th,
+.ai-md td {
+  border: 1px solid #273950;
+  padding: 5px 7px;
+  text-align: left;
+}
+
 .ai-query-preview {
   max-height: 240px;
   overflow: auto;
@@ -659,7 +918,7 @@ button:disabled {
   background: #0b111c;
   color: #c6f6ef;
   padding: 10px;
-  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  font-family: var(--font-geist-mono);
   font-size: 12px;
   line-height: 1.5;
   white-space: pre-wrap;
@@ -785,7 +1044,7 @@ button:disabled {
   display: grid;
   grid-template-columns: 272px minmax(0, 1fr);
   min-height: 0;
-  transition: grid-template-columns 240ms cubic-bezier(0.16, 1, 0.3, 1);
+  transition: grid-template-columns 320ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .app-frame.sidebar-collapsed .app-shell {
@@ -801,28 +1060,36 @@ button:disabled {
   background: #071727;
   transition:
     background-color 180ms ease,
-    border-color 180ms ease;
+    border-color 180ms ease,
+    box-shadow 180ms ease;
 }
 
 .sidebar-content {
   height: 100%;
   min-height: 0;
   opacity: 1;
+  transform: translateX(0);
+  transform-origin: left center;
   transition:
-    opacity 140ms ease,
-    transform 200ms cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 190ms ease 70ms,
+    transform 280ms cubic-bezier(0.22, 1, 0.36, 1),
     visibility 0ms linear 0ms;
+  will-change: opacity, transform;
 }
 
 .sidebar-collapse-button {
   position: absolute;
   top: 12px;
-  right: 12px;
+  left: calc(100% - 42px);
   z-index: 5;
+  transition:
+    left 320ms cubic-bezier(0.22, 1, 0.36, 1),
+    color 160ms ease,
+    background-color 160ms ease,
+    transform 160ms ease;
 }
 
 .sidebar.collapsed .sidebar-collapse-button {
-  right: auto;
   left: 8px;
 }
 
@@ -830,11 +1097,11 @@ button:disabled {
   visibility: hidden;
   opacity: 0;
   pointer-events: none;
-  transform: translateX(-8px);
+  transform: translateX(-10px);
   transition:
-    opacity 110ms ease,
-    transform 160ms ease,
-    visibility 0ms linear 130ms;
+    opacity 140ms ease,
+    transform 220ms cubic-bezier(0.22, 1, 0.36, 1),
+    visibility 0ms linear 150ms;
 }
 
 .sidebar-inner {
@@ -1000,7 +1267,7 @@ button:disabled {
 
 .container-button small {
   color: #c8d8ff;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-family: var(--font-geist-mono);
   font-size: 12px;
 }
 
@@ -1014,6 +1281,7 @@ button:disabled {
   background: #122338;
   color: #d6e3f7;
   font-size: 13px;
+  text-decoration: none;
 }
 
 .new-connection-button:hover {
@@ -1127,7 +1395,7 @@ button:disabled {
   background: #0b1827;
   color: #e2edff;
   padding: 0 10px;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-family: var(--font-geist-mono);
 }
 
 .toolbar-actions select {
@@ -1225,7 +1493,7 @@ button:disabled {
   min-width: 100%;
   border-collapse: collapse;
   table-layout: auto;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-family: var(--font-geist-mono);
   font-size: 14px;
 }
 
@@ -1259,7 +1527,7 @@ button:disabled {
   z-index: 1;
   background: #081725;
   color: #cbd8ec;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-family: var(--font-geist-mono);
   font-size: 13px;
   font-weight: 700;
   letter-spacing: 0;
@@ -1339,7 +1607,7 @@ button:disabled {
   min-height: 0;
   background: #0c1118;
   color: #dce8f9;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-family: var(--font-geist-mono);
   font-size: 14px;
 }
 
@@ -1530,14 +1798,19 @@ button:disabled {
 .relation-path {
   fill: none;
   stroke: #789cff;
-  stroke-dasharray: 6 5;
   stroke-linecap: round;
-  stroke-width: 1.4;
-  opacity: 0.72;
+  stroke-linejoin: round;
+  stroke-width: 1.5;
+  opacity: 0.85;
 }
 
 .relation-layer marker path {
   fill: #789cff;
+}
+
+.relation-dot {
+  fill: #789cff;
+  opacity: 0.95;
 }
 
 .schema-card {
@@ -1581,6 +1854,43 @@ button:disabled {
   min-height: 48px;
   border-bottom: 1px solid #1f344a;
   padding: 0 12px;
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+}
+
+.schema-card-header:active {
+  cursor: grabbing;
+}
+
+.schema-header-meta {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 6px;
+}
+
+.schema-open-button {
+  display: grid;
+  width: 24px;
+  height: 24px;
+  flex: 0 0 auto;
+  place-items: center;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  background: transparent;
+  color: #9aa8bc;
+  cursor: pointer;
+  transition:
+    background 140ms ease,
+    border-color 140ms ease,
+    color 140ms ease;
+}
+
+.schema-open-button:hover {
+  border-color: #5c7dae;
+  background: rgba(158, 188, 255, 0.12);
+  color: #e5efff;
 }
 
 .schema-title {
@@ -1606,7 +1916,7 @@ button:disabled {
 .schema-type {
   flex: 0 0 auto;
   color: #9aa8bc;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-family: var(--font-geist-mono);
   font-size: 11px;
 }
 
@@ -1619,7 +1929,7 @@ button:disabled {
 
 .schema-field {
   display: grid;
-  grid-template-columns: 44px minmax(0, 1fr) auto;
+  grid-template-columns: 18px minmax(0, 1fr) auto;
   align-items: center;
   gap: 8px;
   min-height: 28px;
@@ -1637,6 +1947,19 @@ button:disabled {
   padding: 10px 12px;
   color: #9aa8bc;
   font-style: italic;
+}
+
+.schema-field-lead {
+  display: grid;
+  place-items: center;
+  color: #8aa0bb;
+}
+
+.schema-field-trail {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
 }
 
 .schema-field-icons {
@@ -1672,7 +1995,7 @@ button:disabled {
 
 .field-type {
   color: #aebcce;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-family: var(--font-geist-mono);
   font-size: 11px;
 }
 
@@ -1738,7 +2061,7 @@ button:disabled {
 
 .log-entry span {
   color: #9ebcff;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-family: var(--font-geist-mono);
   font-size: 12px;
   text-transform: uppercase;
 }
@@ -2542,6 +2865,50 @@ button:disabled {
   color: #172235;
 }
 
+.app-frame[data-theme="light"] .ai-message .ai-md {
+  border-color: #d9e2ee;
+  background: #f8fbff;
+  color: #172235;
+}
+
+.app-frame[data-theme="light"] .ai-md strong,
+.app-frame[data-theme="light"] .ai-md h1,
+.app-frame[data-theme="light"] .ai-md h2,
+.app-frame[data-theme="light"] .ai-md h3,
+.app-frame[data-theme="light"] .ai-md h4 {
+  color: #0b1f3a;
+}
+
+.app-frame[data-theme="light"] .ai-md a {
+  color: #0f766e;
+}
+
+.app-frame[data-theme="light"] .ai-md code {
+  background: #eef3f8;
+  border-color: #d9e2ee;
+  color: #0f3f3b;
+}
+
+.app-frame[data-theme="light"] .ai-md pre {
+  background: #f3f7fb;
+  border-color: #d9e2ee;
+}
+
+.app-frame[data-theme="light"] .ai-md pre code {
+  color: #172235;
+}
+
+.app-frame[data-theme="light"] .ai-md blockquote {
+  border-left-color: #cdd9e6;
+  color: #51637a;
+}
+
+.app-frame[data-theme="light"] .ai-md hr,
+.app-frame[data-theme="light"] .ai-md th,
+.app-frame[data-theme="light"] .ai-md td {
+  border-color: #d9e2ee;
+}
+
 .app-frame[data-theme="light"] .ai-message.user p {
   border-color: #0f766e;
   background: #0f766e;
@@ -2695,8 +3062,23 @@ button:disabled {
   stroke: #6387e8;
 }
 
-.app-frame[data-theme="light"] .relation-layer marker path {
+.app-frame[data-theme="light"] .relation-layer marker path,
+.app-frame[data-theme="light"] .relation-dot {
   fill: #6387e8;
+}
+
+.app-frame[data-theme="light"] .schema-field-lead {
+  color: #6d7d91;
+}
+
+.app-frame[data-theme="light"] .schema-open-button {
+  color: #6d7d91;
+}
+
+.app-frame[data-theme="light"] .schema-open-button:hover {
+  border-color: #9eb2d4;
+  background: #eef5ff;
+  color: #1e2d43;
 }
 
 .app-frame[data-theme="light"] .schema-card {
@@ -3381,6 +3763,7 @@ body:has(.app-frame[data-theme="light"]) {
 .app-frame[data-theme="light"] .log-entry,
 .app-frame[data-theme="light"] .ai-drawer-composer textarea,
 .app-frame[data-theme="light"] .ai-message p,
+.app-frame[data-theme="light"] .ai-message .ai-md,
 .app-frame[data-theme="light"] .ai-query-preview {
   border-color: #dbe8ea;
   border-radius: 12px;
@@ -3681,4 +4064,1615 @@ body:has(.app-frame[data-theme="light"]) {
   .app-frame[data-theme="light"] .command-dialog {
     border-radius: 16px;
   }
+}
+
+/* Prisma Studio-inspired compact package UI */
+body:has(.app-frame:not([data-theme="light"])) {
+  background: #171719;
+}
+
+body:has(.app-frame[data-theme="light"]) {
+  background: #f5f6f8;
+}
+
+.app-frame:not([data-theme="light"]) {
+  --studio-page: #171719;
+  --studio-sidebar: #07080a;
+  --studio-main: #18191c;
+  --studio-panel: #0b0c0f;
+  --studio-panel-alt: #101114;
+  --studio-toolbar: #17181b;
+  --studio-elevated: #111216;
+  --studio-row: #08090b;
+  --studio-row-alt: #202124;
+  --studio-line: #2b2d31;
+  --studio-line-strong: #383b41;
+  --studio-text: #e8eaed;
+  --studio-heading: #f4f5f6;
+  --studio-muted: #9b9da3;
+  --studio-muted-strong: #b6b8bd;
+  --studio-accent: #4aa3ff;
+  --studio-accent-soft: rgba(74, 163, 255, 0.16);
+  --studio-accent-line: #4aa3ff;
+  --studio-danger: #ff6b6b;
+  --studio-warn: #f4b740;
+  --editor-bg: #0b0d11;
+  --editor-gutter: #11141a;
+  --editor-active-line: rgba(255, 255, 255, 0.045);
+  --editor-selection: rgba(72, 111, 159, 0.38);
+  --editor-caret: #d7dde5;
+  --editor-keyword: #8ab4f8;
+  --editor-string: #d6b57c;
+  --editor-number: #86c17a;
+  --editor-operator: #c7cad1;
+  --editor-punctuation: #8d949e;
+  --editor-name: #e6e8eb;
+  --editor-comment: #6f7782;
+  color-scheme: dark;
+}
+
+.app-frame[data-theme="light"] {
+  --studio-page: #f5f6f8;
+  --studio-sidebar: #ffffff;
+  --studio-main: #f1f3f5;
+  --studio-panel: #ffffff;
+  --studio-panel-alt: #f8fafc;
+  --studio-toolbar: #ffffff;
+  --studio-elevated: #ffffff;
+  --studio-row: #ffffff;
+  --studio-row-alt: #f7f8fa;
+  --studio-line: #d9dde3;
+  --studio-line-strong: #c5ccd6;
+  --studio-text: #20242c;
+  --studio-heading: #111827;
+  --studio-muted: #69717e;
+  --studio-muted-strong: #404957;
+  --studio-accent: #2563eb;
+  --studio-accent-soft: rgba(37, 99, 235, 0.1);
+  --studio-accent-line: #2563eb;
+  --studio-danger: #dc2626;
+  --studio-warn: #b7791f;
+  --editor-bg: #fbfcfe;
+  --editor-gutter: #f0f2f5;
+  --editor-active-line: rgba(37, 99, 235, 0.065);
+  --editor-selection: rgba(37, 99, 235, 0.16);
+  --editor-caret: #20242c;
+  --editor-keyword: #1d4ed8;
+  --editor-string: #9a5b13;
+  --editor-number: #047857;
+  --editor-operator: #334155;
+  --editor-punctuation: #64748b;
+  --editor-name: #111827;
+  --editor-comment: #7b8493;
+  color-scheme: light;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) {
+  grid-template-rows: 52px minmax(0, 1fr);
+  border: 0;
+  border-radius: 0;
+  background: var(--studio-page);
+  box-shadow: none;
+  color: var(--studio-text);
+  font-size: 13px;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .top-nav {
+  display: grid;
+  grid-template-columns: 246px minmax(220px, 1fr) auto;
+  gap: 16px;
+  min-height: 52px;
+  border-bottom: 1px solid var(--studio-line);
+  background: var(--studio-toolbar);
+  box-shadow: none;
+  padding: 0 12px 0 16px;
+  backdrop-filter: none;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .top-brand {
+  gap: 10px;
+  min-width: 0;
+  color: var(--studio-heading);
+  font-size: 17px;
+  font-weight: 760;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .brand-mark {
+  width: 28px;
+  height: 28px;
+  border-radius: 4px;
+  filter: none;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .top-tabs {
+  justify-self: start;
+  gap: 2px;
+  border: 1px solid var(--studio-line);
+  border-radius: 7px;
+  background: var(--studio-panel);
+  padding: 3px;
+  box-shadow: none;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .top-tab {
+  height: 30px;
+  border: 0;
+  border-radius: 5px;
+  color: var(--studio-muted);
+  padding: 0 12px;
+  font-size: 12.5px;
+  font-weight: 650;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .top-tab:hover,
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .top-tab.active {
+  background: var(--studio-row-alt);
+  color: var(--studio-heading);
+  box-shadow: none;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .top-tab.active::after {
+  display: none;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .top-actions {
+  gap: 8px;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .credit-balance-pill,
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .global-search,
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .ai-trigger {
+  height: 32px;
+  border: 1px solid var(--studio-line-strong);
+  border-radius: 6px;
+  background: var(--studio-panel);
+  color: var(--studio-muted-strong);
+  box-shadow: none;
+  font-size: 12.5px;
+  font-weight: 650;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .credit-balance-pill {
+  gap: 7px;
+  padding: 0 6px 0 9px;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .credit-balance-pill svg,
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .credit-balance-pill strong {
+  color: var(--studio-danger);
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .credit-refresh-button {
+  width: 22px;
+  height: 22px;
+  border-radius: 4px;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .global-search {
+  width: min(380px, 28vw);
+  gap: 8px;
+  padding: 0 10px;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .search-trigger-label,
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .global-search input::placeholder,
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .sidebar-search input::placeholder {
+  color: var(--studio-muted);
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .shortcut-keys kbd {
+  min-width: 20px;
+  border-color: var(--studio-line);
+  border-radius: 4px;
+  background: var(--studio-panel-alt);
+  color: var(--studio-muted);
+  padding: 1px 5px;
+  font-size: 10px;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .ai-trigger {
+  gap: 7px;
+  padding: 0 10px;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .icon-button {
+  width: 30px;
+  height: 30px;
+  border-radius: 6px;
+  color: var(--studio-muted-strong);
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .icon-button:hover,
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .ai-trigger:hover,
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .global-search:hover,
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .credit-balance-pill:hover {
+  border-color: var(--studio-line-strong);
+  background: var(--studio-row-alt);
+  color: var(--studio-heading);
+  box-shadow: none;
+  filter: none;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .app-shell {
+  grid-template-columns: 272px minmax(0, 1fr);
+  transition: grid-template-columns 320ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])).sidebar-collapsed .app-shell {
+  grid-template-columns: 48px minmax(0, 1fr);
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .sidebar,
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .sidebar-inner {
+  background: var(--studio-sidebar);
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .sidebar {
+  border-right: 1px solid var(--studio-line);
+  box-shadow: none;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .sidebar-inner {
+  height: 100%;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .sidebar-collapse-button {
+  top: 10px;
+  left: calc(100% - 40px);
+  right: auto;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  transition:
+    left 320ms cubic-bezier(0.22, 1, 0.36, 1),
+    color 160ms ease,
+    background-color 160ms ease,
+    transform 160ms ease;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .sidebar.collapsed .sidebar-collapse-button {
+  left: 9px;
+  right: auto;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .sidebar-collapse-button:hover {
+  border: 0;
+  background: transparent;
+  color: var(--studio-heading);
+  box-shadow: none;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .connection-summary {
+  border-bottom: 1px solid var(--studio-line);
+  padding: 14px 46px 12px 16px;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .connection-summary h2 {
+  color: var(--studio-heading);
+  font-size: 18px;
+  font-weight: 730;
+  line-height: 1.15;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .connection-summary p {
+  margin-top: 5px;
+  color: var(--studio-muted);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .schema-switcher {
+  gap: 6px;
+  margin: 12px 12px 0;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .schema-switcher span {
+  color: var(--studio-muted);
+  font-size: 10.5px;
+  font-weight: 760;
+  letter-spacing: 0;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .schema-switcher select,
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .sidebar-search,
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .toolbar-actions select,
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .toolbar-actions input,
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .cell-editor-input {
+  border: 1px solid var(--studio-line);
+  border-radius: 6px;
+  background: var(--studio-panel);
+  color: var(--studio-text);
+  box-shadow: none;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .schema-switcher select {
+  height: 32px;
+  padding: 0 9px;
+  font-size: 12.5px;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .sidebar-search {
+  height: 32px;
+  gap: 8px;
+  margin: 10px 12px 10px;
+  padding: 0 9px;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .container-list {
+  gap: 0;
+  padding: 8px 0;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .container-button {
+  grid-template-columns: 16px minmax(0, 1fr) auto;
+  gap: 8px;
+  min-height: 32px;
+  border-left: 3px solid transparent;
+  border-radius: 0;
+  color: var(--studio-muted-strong);
+  padding: 0 12px 0 13px;
+  font-size: 13px;
+  font-weight: 560;
+  transform: none;
+  transition: background-color 120ms ease, color 120ms ease;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .container-button:hover {
+  background: var(--studio-row-alt);
+  color: var(--studio-heading);
+  transform: none;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .container-button.active {
+  border-left-color: var(--studio-accent-line);
+  background: var(--studio-row-alt);
+  color: var(--studio-heading);
+  box-shadow: none;
+  font-weight: 720;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .container-button.active::before {
+  display: none;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .container-button.active svg {
+  display: block;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .container-button small {
+  border-radius: 0;
+  background: transparent;
+  color: var(--studio-muted);
+  padding: 0;
+  font-family: var(--font-geist-mono);
+  font-size: 11px;
+  font-weight: 650;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .new-connection-button {
+  height: 32px;
+  margin: 10px 12px 12px;
+  border: 1px solid var(--studio-line-strong);
+  border-radius: 6px;
+  background: var(--studio-panel);
+  color: var(--studio-muted-strong);
+  font-size: 12.5px;
+  font-weight: 680;
+  box-shadow: none;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .new-connection-button:hover {
+  border-color: var(--studio-line-strong);
+  background: var(--studio-row-alt);
+  color: var(--studio-heading);
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .main-panel {
+  min-height: 0;
+  background: var(--studio-main);
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .top-status {
+  height: 36px;
+  border-bottom: 1px solid var(--studio-line);
+  background: var(--studio-main);
+  padding: 0 14px;
+  color: var(--studio-muted);
+  font-size: 12px;
+  font-weight: 680;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .mode-pill {
+  gap: 7px;
+  border: 1px solid var(--studio-line);
+  border-radius: 999px;
+  background: var(--studio-elevated);
+  color: var(--studio-muted-strong);
+  padding: 4px 9px;
+  box-shadow: none;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .mode-pill.write {
+  background: rgba(244, 183, 64, 0.12);
+  color: var(--studio-warn);
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .workspace-grid {
+  grid-template-columns: minmax(360px, 0.82fr) minmax(520px, 1.38fr);
+  height: calc(100vh - 88px);
+  gap: 12px;
+  padding: 12px;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .workspace-grid.single-panel {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .content-panel,
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .query-panel,
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .browse-panel,
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .visualizer-panel,
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .logs-panel {
+  border: 1px solid var(--studio-line);
+  border-radius: 6px;
+  background: var(--studio-panel);
+  box-shadow: none;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .query-panel {
+  grid-template-rows: auto minmax(220px, 1fr) auto auto;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .panel-toolbar,
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .query-panel .panel-toolbar,
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .visualizer-toolbar {
+  min-height: 44px;
+  border-bottom: 1px solid var(--studio-line);
+  background: var(--studio-toolbar);
+  padding: 0 12px;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .panel-title {
+  gap: 8px;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .panel-title svg {
+  width: 17px;
+  height: 17px;
+  color: var(--studio-muted-strong);
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .panel-title h2 {
+  color: var(--studio-heading);
+  font-size: 15px;
+  font-weight: 730;
+  letter-spacing: 0;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .toolbar-actions {
+  gap: 8px;
+  white-space: nowrap;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .toolbar-actions label {
+  gap: 7px;
+  color: var(--studio-muted);
+  font-size: 12px;
+  font-weight: 650;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .toolbar-actions select,
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .toolbar-actions input {
+  height: 30px;
+  font-size: 12.5px;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .toolbar-actions select {
+  width: 74px;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .pagination-control,
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .zoom-controls {
+  gap: 6px;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .pagination-control span,
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .zoom-controls span {
+  color: var(--studio-muted-strong);
+  font-size: 12.5px;
+  font-weight: 700;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .panel-toolbar button,
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .toolbar-actions button,
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .query-history button,
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .confirm-modal-actions button,
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .icon-button.bordered {
+  min-height: 30px;
+  border: 1px solid var(--studio-line-strong);
+  border-radius: 6px;
+  background: var(--studio-elevated);
+  color: var(--studio-muted-strong);
+  padding: 0 10px;
+  font-size: 12.5px;
+  font-weight: 680;
+  box-shadow: none;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .panel-toolbar button:hover,
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .toolbar-actions button:hover,
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .query-history button:hover,
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .icon-button.bordered:hover {
+  border-color: var(--studio-line-strong);
+  background: var(--studio-row-alt);
+  color: var(--studio-heading);
+  filter: none;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .query-panel .panel-toolbar button {
+  border-color: #14b8a6;
+  background: #14b8a6;
+  color: #04120f;
+  box-shadow: none;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .panel-toolbar .save-button,
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .toolbar-actions .save-button {
+  border-color: #16a34a;
+  background: #16a34a;
+  color: #ffffff;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .panel-toolbar .insert-row-button,
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .toolbar-actions .insert-row-button {
+  gap: 6px;
+  border-color: var(--studio-line-strong);
+  background: var(--studio-elevated);
+  color: var(--studio-heading);
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .panel-toolbar .secondary-button,
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .toolbar-actions .secondary-button {
+  border-color: var(--studio-line);
+  background: var(--studio-panel);
+  color: var(--studio-muted-strong);
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .pending-edits-count,
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .edit-status,
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .visualizer-count {
+  color: var(--studio-muted);
+  font-size: 11.5px;
+  font-weight: 650;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .grid-scroll {
+  min-height: 0;
+  border: 0;
+  background: var(--studio-row);
+  container-type: inline-size;
+  scrollbar-color: var(--studio-line-strong) var(--studio-panel);
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .data-grid {
+  font-family: var(--font-geist-mono);
+  font-size: 12.5px;
+  line-height: 1.35;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .data-grid th,
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .data-grid td {
+  min-width: 128px;
+  max-width: 300px;
+  border-bottom: 1px solid var(--studio-line);
+  border-right: 1px solid var(--studio-line);
+  padding: 8px 10px;
+  vertical-align: middle;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .data-grid th:first-child,
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .data-grid td:first-child {
+  min-width: 220px;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .data-grid th:nth-child(2),
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .data-grid td:nth-child(2) {
+  min-width: 220px;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .data-grid th {
+  height: 34px;
+  background: var(--studio-panel);
+  color: var(--studio-heading);
+  font-size: 12px;
+  font-weight: 720;
+  text-transform: none;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .data-grid td {
+  height: 36px;
+  background: var(--studio-row);
+  color: var(--studio-text);
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .data-grid tbody tr:nth-child(even) td {
+  background: var(--studio-row-alt);
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .data-grid tr:hover td,
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .data-grid tbody tr:nth-child(even):hover td,
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .data-grid td.editable-cell:hover {
+  background: var(--studio-accent-soft);
+  outline-color: rgba(74, 163, 255, 0.38);
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .data-grid td.dirty,
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .data-grid tr:hover td.dirty {
+  background: rgba(244, 183, 64, 0.14);
+  box-shadow: inset 3px 0 0 var(--studio-warn);
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .data-grid tr.insert-draft-row td {
+  border-bottom-color: rgba(244, 183, 64, 0.75);
+  background: rgba(244, 183, 64, 0.08);
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .data-grid tr.insert-draft-row:hover td {
+  background: rgba(244, 183, 64, 0.12);
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .data-grid td.insert-draft-cell {
+  padding: 5px 6px;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .insert-row-marker {
+  color: var(--studio-warn);
+  font-family: var(--font-geist-mono);
+  font-size: 14px;
+  font-weight: 900;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .insert-row-input {
+  width: 100%;
+  min-width: 118px;
+  height: 28px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  outline: 0;
+  background: transparent;
+  color: var(--studio-text);
+  padding: 0 7px;
+  font-family: var(--font-geist-mono);
+  font-size: 12.5px;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .insert-row-input::placeholder {
+  color: var(--studio-muted);
+  font-style: italic;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .insert-row-input:focus {
+  border-color: var(--studio-warn);
+  background: var(--studio-panel);
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .insert-row-input:disabled {
+  color: var(--studio-muted);
+  cursor: not-allowed;
+  opacity: 1;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .column-label {
+  display: inline-flex;
+  max-width: 100%;
+  min-width: 0;
+  align-items: center;
+  gap: 5px;
+  vertical-align: middle;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .column-label span {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .column-key-icon {
+  color: #f4b740;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .column-required-icon {
+  color: #ff6b6b;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .column-type {
+  margin-left: 6px;
+  color: var(--studio-muted);
+  font-weight: 620;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .json-value.compact {
+  max-height: 18px;
+  color: var(--studio-text);
+  font-size: 12.5px;
+  line-height: 1.35;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .null-value,
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .muted {
+  color: var(--studio-muted);
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .cell-editor-input {
+  height: 24px;
+  min-width: 140px;
+  border-color: var(--studio-accent);
+  border-radius: 4px;
+  padding: 0 7px;
+  font-size: 12.5px;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .query-editor .cm-editor {
+  background: var(--editor-bg);
+  color: var(--studio-text);
+  font-family: var(--font-geist-mono);
+  font-size: 13px;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .query-editor .cm-focused {
+  outline: 1px solid var(--studio-line-strong);
+  outline-offset: -1px;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .query-editor .cm-content {
+  caret-color: var(--editor-caret);
+  padding: 8px 0;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .query-editor .cm-line {
+  line-height: 1.45;
+  padding: 0 10px;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .query-editor .cm-gutters {
+  border-right: 1px solid var(--studio-line);
+  background: var(--editor-gutter);
+  color: var(--studio-muted);
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .query-editor .cm-activeLine,
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .query-editor .cm-activeLineGutter {
+  background: var(--editor-active-line);
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .query-editor .cm-cursor,
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .query-editor .cm-dropCursor {
+  border-left-color: var(--editor-caret) !important;
+  border-left-width: 2px !important;
+  box-shadow: none;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .query-editor .cm-selectionBackground,
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .query-editor .cm-focused .cm-selectionBackground {
+  background: var(--editor-selection) !important;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .query-editor .tok-keyword {
+  color: var(--editor-keyword);
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .query-editor .tok-string {
+  color: var(--editor-string);
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .query-editor .tok-number,
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .query-editor .tok-bool,
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .query-editor .tok-null,
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .query-editor .tok-atom {
+  color: var(--editor-number);
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .query-editor .tok-operator {
+  color: var(--editor-operator);
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .query-editor .tok-punctuation {
+  color: var(--editor-punctuation);
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .query-editor .tok-variableName,
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .query-editor .tok-propertyName,
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .query-editor .tok-typeName {
+  color: var(--editor-name);
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .query-editor .tok-comment {
+  color: var(--editor-comment);
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .query-history {
+  gap: 6px;
+  border-top: 1px solid var(--studio-line);
+  background: var(--studio-toolbar);
+  padding: 8px 10px;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .query-history h3 {
+  color: var(--studio-muted);
+  font-size: 11.5px;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .query-history button {
+  flex-basis: 140px;
+  border-radius: 5px;
+  padding: 6px 8px;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .error-message,
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .loading-state,
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .empty-state {
+  margin: 10px;
+  border-radius: 6px;
+  box-shadow: none;
+  padding: 10px;
+  font-size: 12.5px;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .loading-state,
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .empty-state {
+  border: 1px solid var(--studio-line);
+  background: var(--studio-panel-alt);
+  color: var(--studio-muted);
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .visualizer-canvas {
+  background-color: var(--studio-panel);
+  background-image: radial-gradient(circle, color-mix(in srgb, var(--studio-muted) 22%, transparent) 1px, transparent 1px);
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .command-dialog,
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .ai-drawer,
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .confirm-modal {
+  border-color: var(--studio-line);
+  background: var(--studio-panel);
+  color: var(--studio-text);
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .command-search-row input {
+  color: var(--studio-text);
+  font-size: 18px;
+}
+
+@media (max-width: 1040px) {
+  .app-frame:is([data-theme="light"], :not([data-theme="light"])) {
+    overflow: auto;
+  }
+
+  .app-frame:is([data-theme="light"], :not([data-theme="light"])) .top-nav {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .app-frame:is([data-theme="light"], :not([data-theme="light"])) .top-tabs {
+    display: none;
+  }
+
+  .app-frame:is([data-theme="light"], :not([data-theme="light"])) .global-search {
+    width: 250px;
+  }
+
+  .app-frame:is([data-theme="light"], :not([data-theme="light"])) .app-shell,
+  .app-frame:is([data-theme="light"], :not([data-theme="light"])).sidebar-collapsed .app-shell,
+  .app-frame:is([data-theme="light"], :not([data-theme="light"])) .workspace-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .app-frame:is([data-theme="light"], :not([data-theme="light"])) .sidebar-inner,
+  .app-frame:is([data-theme="light"], :not([data-theme="light"])) .workspace-grid {
+    height: auto;
+  }
+
+  .app-frame:is([data-theme="light"], :not([data-theme="light"])) .sidebar-inner {
+    max-height: 360px;
+  }
+}
+
+@media (max-width: 680px) {
+  .app-frame:is([data-theme="light"], :not([data-theme="light"])) {
+    grid-template-rows: auto minmax(0, 1fr);
+  }
+
+  .app-frame:is([data-theme="light"], :not([data-theme="light"])) .top-nav {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding: 10px;
+  }
+
+  .app-frame:is([data-theme="light"], :not([data-theme="light"])) .top-actions {
+    justify-content: stretch;
+  }
+
+  .app-frame:is([data-theme="light"], :not([data-theme="light"])) .global-search {
+    flex: 1;
+    width: auto;
+  }
+
+  .app-frame:is([data-theme="light"], :not([data-theme="light"])) .workspace-grid {
+    gap: 10px;
+    padding: 10px;
+  }
+
+  .app-frame:is([data-theme="light"], :not([data-theme="light"])) .panel-toolbar {
+    align-items: flex-start;
+    flex-direction: column;
+    padding: 8px 10px;
+  }
+
+  .app-frame:is([data-theme="light"], :not([data-theme="light"])) .toolbar-actions {
+    width: 100%;
+    flex-wrap: wrap;
+  }
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .query-workspace {
+  display: grid;
+  grid-template-rows: minmax(190px, 30vh) minmax(0, 1fr);
+  gap: 12px;
+  height: calc(100vh - 88px);
+  min-height: 0;
+  padding: 12px;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .query-workspace.result-expanded {
+  grid-template-rows: minmax(0, 1fr);
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .query-workspace.result-expanded .query-panel {
+  display: none;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .query-workspace .query-panel,
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .query-workspace .browse-panel {
+  min-height: 0;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .query-workspace .query-panel {
+  grid-template-rows: auto minmax(120px, 1fr) auto auto;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .query-workspace .query-editor .cm-editor {
+  min-height: 0;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .query-workspace .browse-panel .panel-toolbar {
+  min-height: 42px;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .query-workspace .browse-panel .panel-title h2 {
+  font-size: 14px;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .result-expand-button {
+  gap: 7px;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .query-toolbar-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .query-panel .panel-toolbar .use-nyth-ai-button {
+  border-color: var(--studio-line-strong);
+  background: var(--studio-elevated);
+  color: var(--studio-muted-strong);
+  box-shadow: none;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .query-panel .panel-toolbar .use-nyth-ai-button:hover {
+  background: var(--studio-row-alt);
+  color: var(--studio-heading);
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .data-grid th.row-toggle-heading,
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .data-grid td.row-toggle-cell {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  width: 38px;
+  min-width: 38px;
+  max-width: 38px;
+  padding: 0;
+  text-align: center;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .data-grid th.row-toggle-heading {
+  z-index: 4;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .data-grid td.row-toggle-cell {
+  background: var(--studio-row);
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .data-grid tbody tr:nth-child(even) td.row-toggle-cell {
+  background: var(--studio-row-alt);
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .data-grid tr:hover td.row-toggle-cell,
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .data-grid tbody tr:nth-child(even):hover td.row-toggle-cell {
+  background: var(--studio-accent-soft);
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .data-grid tr.insert-draft-row td.row-toggle-cell,
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .data-grid tr.insert-draft-row:hover td.row-toggle-cell {
+  background: rgba(244, 183, 64, 0.12);
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .row-expand-toggle {
+  display: inline-grid;
+  width: 24px;
+  height: 24px;
+  place-items: center;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  background: transparent;
+  color: var(--studio-muted-strong);
+  font-family: var(--font-geist-mono);
+  font-size: 13px;
+  font-weight: 800;
+  line-height: 1;
+  padding: 0;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .row-expand-toggle:hover,
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .row-expand-toggle:focus-visible {
+  border-color: var(--studio-line-strong);
+  background: var(--studio-accent-soft);
+  color: var(--studio-heading);
+  outline: 0;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .data-row.expanded td {
+  border-bottom-color: var(--studio-line-strong);
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .data-grid td.expanded-row-cell {
+  padding: 0;
+  max-width: none;
+  white-space: normal;
+  background: var(--studio-panel);
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .row-flex-boxes {
+  position: sticky;
+  left: 0;
+  display: flex;
+  width: calc(100cqw - 2px);
+  max-width: calc(100cqw - 2px);
+  flex-wrap: wrap;
+  gap: 10px;
+  border-bottom: 1px solid var(--studio-line);
+  background: var(--studio-panel);
+  padding: 10px 12px 12px;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .row-field-box {
+  display: grid;
+  flex: 1 1 260px;
+  min-width: 220px;
+  max-width: 100%;
+  gap: 8px;
+  border: 1px solid var(--studio-line);
+  border-radius: 6px;
+  background: var(--studio-elevated);
+  padding: 9px 10px;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .row-field-box.dirty {
+  border-color: rgba(244, 183, 64, 0.55);
+  box-shadow: inset 3px 0 0 var(--studio-warn);
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .row-field-box header {
+  display: flex;
+  min-width: 0;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .row-field-name,
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .row-field-type {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .row-field-name {
+  color: var(--studio-heading);
+  font-family: var(--font-geist-mono);
+  font-size: 12px;
+  font-weight: 760;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .row-field-type {
+  flex: 0 1 auto;
+  color: var(--studio-muted);
+  font-family: var(--font-geist-mono);
+  font-size: 11px;
+  font-weight: 650;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .row-field-value {
+  min-width: 0;
+  color: var(--studio-text);
+  font-family: var(--font-geist-mono);
+  font-size: 12px;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .row-field-value .json-value {
+  max-height: none;
+  margin: 0;
+  overflow: visible;
+  color: var(--studio-text);
+  font-size: 12px;
+  line-height: 1.45;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .connection-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  display: grid;
+  place-items: center;
+  background: rgba(5, 8, 15, 0.42);
+  padding: 20px;
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  animation: modal-backdrop-in 180ms ease-out;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .connection-modal {
+  display: grid;
+  width: min(540px, 100%);
+  overflow: hidden;
+  border: 1px solid var(--studio-line-strong);
+  border-radius: 10px;
+  background: var(--studio-panel);
+  color: var(--studio-text);
+  box-shadow: 0 28px 90px rgba(0, 0, 0, 0.42);
+  animation: modal-dialog-in 240ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .app-frame:is([data-theme="light"], :not([data-theme="light"])) .connection-modal-backdrop,
+  .app-frame:is([data-theme="light"], :not([data-theme="light"])) .connection-modal {
+    animation: none;
+  }
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .connection-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  border-bottom: 1px solid var(--studio-line);
+  background: var(--studio-toolbar);
+  padding: 14px 14px 14px 16px;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .connection-modal-header div {
+  display: grid;
+  min-width: 0;
+  gap: 4px;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .connection-modal-header strong {
+  color: var(--studio-heading);
+  font-size: 15px;
+  font-weight: 760;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .connection-modal-header span {
+  color: var(--studio-muted);
+  font-size: 12px;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .connection-form {
+  display: grid;
+  gap: 12px;
+  padding: 16px;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .connection-field {
+  display: grid;
+  gap: 7px;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .connection-field span {
+  color: var(--studio-muted);
+  font-size: 11px;
+  font-weight: 760;
+  text-transform: uppercase;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .connection-field input {
+  width: 100%;
+  height: 36px;
+  border: 1px solid var(--studio-line);
+  border-radius: 6px;
+  outline: 0;
+  background: var(--studio-elevated);
+  color: var(--studio-text);
+  padding: 0 10px;
+  font-family: var(--font-geist-mono);
+  font-size: 12.5px;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .connection-field input:focus {
+  border-color: var(--studio-accent);
+  box-shadow: 0 0 0 3px var(--studio-accent-soft);
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .connection-mode {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px;
+  border: 1px solid var(--studio-line);
+  border-radius: 7px;
+  background: var(--studio-elevated);
+  padding: 4px;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .connection-mode button {
+  height: 30px;
+  border: 0;
+  border-radius: 5px;
+  background: transparent;
+  color: var(--studio-muted);
+  font-size: 12.5px;
+  font-weight: 700;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .connection-mode button.active {
+  background: var(--studio-row-alt);
+  color: var(--studio-heading);
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .connection-error {
+  border: 1px solid rgba(255, 107, 107, 0.4);
+  border-radius: 6px;
+  background: rgba(255, 107, 107, 0.1);
+  color: var(--studio-danger);
+  padding: 8px 10px;
+  font-size: 12px;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .deploy-connection-button {
+  display: inline-flex;
+  height: 34px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #14b8a6;
+  border-radius: 6px;
+  background: #14b8a6;
+  color: #04120f;
+  padding: 0 12px;
+  font-size: 12.5px;
+  font-weight: 760;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .deploy-connection-button:hover {
+  filter: brightness(1.05);
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .connection-command {
+  display: grid;
+  gap: 9px;
+  border-top: 1px solid var(--studio-line);
+  background: var(--studio-toolbar);
+  padding: 14px 16px 16px;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .connection-command span {
+  color: var(--studio-muted);
+  font-size: 12px;
+  font-weight: 650;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .connection-command code {
+  overflow-x: auto;
+  border: 1px solid var(--studio-line);
+  border-radius: 6px;
+  background: var(--studio-elevated);
+  color: var(--studio-heading);
+  padding: 9px 10px;
+  font-family: var(--font-geist-mono);
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .connection-command button {
+  justify-self: start;
+  display: inline-flex;
+  height: 30px;
+  align-items: center;
+  gap: 7px;
+  border: 1px solid var(--studio-line-strong);
+  border-radius: 6px;
+  background: var(--studio-elevated);
+  color: var(--studio-muted-strong);
+  padding: 0 10px;
+  font-size: 12.5px;
+  font-weight: 680;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .connection-command button:hover {
+  background: var(--studio-row-alt);
+  color: var(--studio-heading);
+}
+
+@media (max-width: 1040px) {
+  .app-frame:is([data-theme="light"], :not([data-theme="light"])) .query-workspace {
+    height: auto;
+    min-height: calc(100vh - 88px);
+  }
+}
+
+@media (max-width: 680px) {
+  .app-frame:is([data-theme="light"], :not([data-theme="light"])) .query-workspace {
+    grid-template-rows: minmax(180px, auto) minmax(360px, 1fr);
+    gap: 10px;
+    padding: 10px;
+  }
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .filter-toggle-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border-color: var(--studio-line-strong);
+  background: var(--studio-elevated);
+  color: var(--studio-heading);
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .filter-toggle-button.active {
+  border-color: var(--studio-accent);
+  background: var(--studio-accent-soft);
+  color: var(--studio-heading);
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .filter-count-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 17px;
+  height: 17px;
+  border-radius: 9px;
+  background: var(--studio-accent);
+  color: #ffffff;
+  padding: 0 5px;
+  font-size: 10.5px;
+  font-weight: 760;
+  line-height: 1;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .filter-bar {
+  display: grid;
+  gap: 8px;
+  border-bottom: 1px solid var(--studio-line);
+  background: var(--studio-toolbar);
+  padding: 10px 14px;
+  animation: modal-backdrop-in 160ms ease-out;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .filter-row {
+  display: grid;
+  grid-template-columns: minmax(140px, 220px) minmax(150px, 200px) minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 8px;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .filter-row select,
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .filter-row input {
+  height: 30px;
+  border: 1px solid var(--studio-line-strong);
+  border-radius: 6px;
+  outline: 0;
+  background: var(--studio-elevated);
+  color: var(--studio-text);
+  padding: 0 9px;
+  font-size: 12.5px;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .filter-row input {
+  font-family: var(--font-geist-mono);
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .filter-row select:focus,
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .filter-row input:focus {
+  border-color: var(--studio-accent);
+  box-shadow: 0 0 0 3px var(--studio-accent-soft);
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .filter-value-placeholder {
+  color: var(--studio-muted);
+  font-size: 12px;
+  padding: 0 4px;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .filter-remove-button {
+  color: var(--studio-muted);
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .filter-remove-button:hover {
+  color: var(--studio-danger);
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .filter-bar-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .filter-bar-actions button {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  height: 28px;
+  border: 1px solid var(--studio-line);
+  border-radius: 6px;
+  background: var(--studio-panel);
+  color: var(--studio-muted-strong);
+  padding: 0 10px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .filter-bar-actions .filter-apply-button {
+  border-color: #14b8a6;
+  background: #14b8a6;
+  color: #04120f;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .filter-bar-actions .filter-apply-button:hover {
+  filter: brightness(1.05);
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .filter-bar-hint {
+  color: var(--studio-muted);
+  font-size: 12px;
+}
+
+@media (max-width: 680px) {
+  .app-frame:is([data-theme="light"], :not([data-theme="light"])) .filter-row {
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-auto-rows: auto;
+  }
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .table-shadow-loader {
+  display: grid;
+  align-content: start;
+  gap: 10px;
+  min-height: 0;
+  background: var(--studio-row);
+  padding: 14px 16px;
+  overflow: hidden;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .table-shadow-grid {
+  display: grid;
+  gap: 0;
+  border: 1px solid var(--studio-line);
+  border-radius: 8px;
+  background: var(--studio-panel);
+  overflow: hidden;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .table-shadow-row {
+  display: grid;
+  grid-template-columns: repeat(var(--shadow-columns, 6), minmax(0, 1fr));
+  border-bottom: 1px solid var(--studio-line);
+  opacity: 0;
+  animation: table-shadow-row-in 340ms ease-out forwards;
+  animation-delay: calc(var(--shadow-row-index, 0) * 55ms);
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .table-shadow-row:last-child {
+  border-bottom: 0;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .table-shadow-row.header {
+  background: var(--studio-toolbar);
+  opacity: 1;
+  animation: none;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .table-shadow-row:nth-child(odd):not(.header) {
+  background: var(--studio-row-alt);
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .table-shadow-cell {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  height: 34px;
+  border-right: 1px solid var(--studio-line);
+  padding: 0 10px;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .table-shadow-cell:last-child {
+  border-right: 0;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .table-shadow-bar {
+  position: relative;
+  height: 9px;
+  border-radius: 999px;
+  background: var(--studio-accent-soft);
+  overflow: hidden;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .table-shadow-row.header .table-shadow-bar {
+  height: 10px;
+  background: var(--studio-line-strong);
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .table-shadow-bar::after {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(45, 212, 191, 0.28), transparent);
+  animation: shadow-loader-sweep 1.05s ease-in-out infinite;
+  content: "";
+  transform: translateX(-100%);
+}
+
+@keyframes table-shadow-row-in {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .app-frame:is([data-theme="light"], :not([data-theme="light"])) .table-shadow-row {
+    opacity: 1;
+    animation: none;
+  }
+
+  .app-frame:is([data-theme="light"], :not([data-theme="light"])) .table-shadow-bar::after {
+    animation: none;
+  }
+}
+
+/* The generic .content-panel grid sizes rows by position, so the optional
+   filter bar would capture its 1fr row. Flex keeps every bar auto-sized and
+   gives the remaining height to the grid/loader explicitly. */
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .browse-panel {
+  display: flex;
+  flex-direction: column;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .browse-panel .panel-toolbar,
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .browse-panel .filter-bar,
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .browse-panel .error-message {
+  flex: 0 0 auto;
+}
+
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .browse-panel .grid-scroll,
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .browse-panel .table-shadow-loader,
+.app-frame:is([data-theme="light"], :not([data-theme="light"])) .browse-panel .empty-state {
+  flex: 1 1 auto;
+  min-height: 0;
 }

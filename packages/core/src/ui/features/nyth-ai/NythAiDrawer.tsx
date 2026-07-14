@@ -2,8 +2,9 @@ import type { JSX } from "preact";
 import { Code2, Send, Sparkles, X } from "lucide-preact";
 import { useEffect, useRef, useState } from "preact/hooks";
 
-import { askNythAi } from "../../api/client";
+import { askNythAiStream } from "../../api/client";
 import { QuickLoader } from "../../components/QuickLoader";
+import { Markdown } from "./Markdown";
 
 interface NythAiDrawerProps {
   onClose(): void;
@@ -50,15 +51,44 @@ export function NythAiDrawer({ onClose, onInsertQuery }: NythAiDrawerProps) {
     setLoading(true);
     setMessages((current) => [...current, userMessage]);
 
+    // The model streams its raw output, which for the package is structured
+    // JSON ({"text": ..., "query": ...}). The `text` field is extracted from
+    // the growing buffer so the bubble fills with clean prose as it generates;
+    // the terminal `done` event then settles the canonical message (+ query).
+    const stream = { buffer: "", messageId: null as number | null };
+
     try {
-      const response = await askNythAi({ prompt });
-      setMessages((current) => [
-        ...current,
-        createMessage("assistant", response.result.text || "No response returned.", {
-          isQuery: response.result.isQuery,
-          query: response.result.query
-        })
-      ]);
+      const response = await askNythAiStream({ prompt }, (chunk) => {
+        stream.buffer += chunk;
+        const text = extractStreamingText(stream.buffer);
+
+        if (!text) {
+          return;
+        }
+
+        if (stream.messageId === null) {
+          const streamingMessage = createMessage("assistant", text);
+          stream.messageId = streamingMessage.id;
+          setLoading(false);
+          setMessages((current) => [...current, streamingMessage]);
+          return;
+        }
+
+        setMessages((current) =>
+          current.map((message) => (message.id === stream.messageId ? { ...message, content: text } : message))
+        );
+      });
+
+      const finalMessage = createMessage("assistant", response.result.text || "No response returned.", {
+        isQuery: response.result.isQuery,
+        query: response.result.query
+      });
+
+      setMessages((current) =>
+        stream.messageId === null
+          ? [...current, finalMessage]
+          : current.map((message) => (message.id === stream.messageId ? { ...finalMessage, id: message.id } : message))
+      );
     } catch (sendError) {
       setError(sendError instanceof Error ? sendError.message : "Nyth AI request failed.");
     } finally {
@@ -90,7 +120,7 @@ export function NythAiDrawer({ onClose, onInsertQuery }: NythAiDrawerProps) {
           {messages.map((message) => (
             <article class={`ai-message ${message.role}`} key={message.id}>
               <span>{message.role === "user" ? "You" : "Nyth AI"}</span>
-              <p>{message.content}</p>
+              {message.role === "assistant" ? <Markdown content={message.content} /> : <p>{message.content}</p>}
               {message.query ? <pre class="ai-query-preview">{message.query}</pre> : null}
               {message.isQuery && message.query ? (
                 <button class="ai-insert-query" type="button" onClick={() => onInsertQuery?.(message.query ?? "")}>
@@ -144,6 +174,23 @@ function createMessage(role: ChatMessage["role"], content: string, options: Pick
     isQuery: options.isQuery,
     query: options.query
   };
+}
+
+// Progressively pulls the `text` field out of the model's (possibly incomplete)
+// JSON reply. Returns "" until the field appears / while the tail is mid-escape,
+// in which case the caller keeps the previously rendered text.
+function extractStreamingText(buffer: string): string {
+  const match = buffer.match(/"text"\s*:\s*"((?:[^"\\]|\\.)*)/);
+
+  if (!match) {
+    return "";
+  }
+
+  try {
+    return JSON.parse(`"${match[1]}"`) as string;
+  } catch {
+    return "";
+  }
 }
 
 function handleShellMouseDown(onClose: () => void) {

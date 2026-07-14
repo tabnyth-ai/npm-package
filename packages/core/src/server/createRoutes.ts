@@ -1,7 +1,15 @@
 import { Hono, type Context } from "hono";
+import { streamSSE } from "hono/streaming";
 
-import type { CellUpdate, DatabaseAdapter, QueryInput } from "../adapters/types";
-import { askNythAi, getNythAiCreditBalance } from "../nyth/client";
+import type {
+  BrowseFilter,
+  BrowseFilterOperator,
+  CellUpdate,
+  DatabaseAdapter,
+  InsertRowsInput,
+  QueryInput
+} from "../adapters/types";
+import { askNythAi, askNythAiStream, getNythAiCreditBalance } from "../nyth/client";
 import type { NythAiChatInput, NythAiSchemaContext } from "../nyth/types";
 import { clampLimit, readOffset, type PaginationLimits } from "../safety/limits";
 import { assertMongoOperationAllowed } from "../safety/mongoGuard";
@@ -15,50 +23,73 @@ export interface ApiConfig extends PaginationLimits {
 }
 
 export interface ApiContext {
-  adapter: DatabaseAdapter;
-  config: ApiConfig;
+  adapter?: DatabaseAdapter;
+  config?: ApiConfig;
+  runtime?: ApiRuntime;
   projectRoot?: string;
+  connectDatabase?(input: ConnectDatabaseInput): Promise<void>;
 }
 
-export function createRoutes({ adapter, config, projectRoot }: ApiContext): Hono {
+export interface ApiRuntime {
+  adapter: DatabaseAdapter;
+  config: ApiConfig;
+}
+
+export interface ConnectDatabaseInput {
+  databaseUrl: string;
+  mode?: "view" | "edit";
+}
+
+export function createRoutes(context: ApiContext): Hono {
   const routes = new Hono();
+  const runtime = context.runtime ?? createRuntimeFromContext(context);
 
   routes.get("/health", (c) => c.json({ ok: true }));
 
-  routes.get("/meta", (c) =>
-    c.json({
-      adapter: config.adapterName,
-      kind: adapter.kind,
-      allowWrite: config.allowWrite,
-      defaultLimit: config.defaultLimit,
-      maxLimit: config.maxLimit,
-      timeoutMs: config.timeoutMs
-    })
-  );
+  routes.get("/meta", (c) => c.json(readMeta(runtime)));
 
-  routes.get("/containers", async (c) => c.json({ containers: await adapter.listContainers() }));
+  routes.get("/containers", async (c) => c.json({ containers: await runtime.adapter.listContainers() }));
 
   routes.get("/containers/:name/structure", async (c) => {
     const name = decodeURIComponent(c.req.param("name"));
-    return c.json({ structure: await adapter.describeContainer(name) });
+    return c.json({ structure: await runtime.adapter.describeContainer(name) });
   });
 
   routes.get("/search", async (c) => {
     const query = c.req.query("q")?.trim() ?? "";
     const limit = clampSearchLimit(c.req.query("limit"));
 
-    return c.json({ results: await adapter.search({ query, limit }) });
+    return c.json({ results: await runtime.adapter.search({ query, limit }) });
+  });
+
+  routes.post("/connect", async (c) => {
+    if (!context.connectDatabase) {
+      throw new ApiError(501, "Connecting from the UI is not available in this server.");
+    }
+
+    const body = await readJson<Record<string, unknown>>(c);
+
+    await context.connectDatabase({
+      databaseUrl: readRequiredString(body.databaseUrl, "databaseUrl").trim(),
+      mode: readConnectionMode(body.mode)
+    });
+
+    return c.json({
+      meta: readMeta(runtime),
+      containers: await runtime.adapter.listContainers()
+    });
   });
 
   routes.post("/browse", async (c) => {
     const body = await readJson<Record<string, unknown>>(c);
     const container = readRequiredString(body.container, "container");
 
-    const result = await adapter.browse({
+    const result = await runtime.adapter.browse({
       container,
       schema: readOptionalString(body.schema),
-      limit: clampLimit(body.limit, config),
-      offset: readOffset(body.offset)
+      limit: clampLimit(body.limit, runtime.config),
+      offset: readOffset(body.offset),
+      filters: readBrowseFilters(body.filters)
     });
 
     return c.json({ result });
@@ -66,14 +97,14 @@ export function createRoutes({ adapter, config, projectRoot }: ApiContext): Hono
 
   routes.post("/query", async (c) => {
     const body = await readJson<QueryInput>(c);
-    const input = normalizeQueryInput(adapter.kind, body, config);
-    const result = await adapter.runQuery(input);
+    const input = normalizeQueryInput(runtime.adapter.kind, body, runtime.config);
+    const result = await runtime.adapter.runQuery(input);
 
     return c.json({ result });
   });
 
   routes.post("/cells", async (c) => {
-    if (!config.allowWrite) {
+    if (!runtime.config.allowWrite) {
       throw new ApiError(400, "Cell editing requires --allow-write.");
     }
 
@@ -81,7 +112,7 @@ export function createRoutes({ adapter, config, projectRoot }: ApiContext): Hono
     const container = readRequiredString(body.container, "container");
     const updates = readCellUpdates(body.updates);
 
-    const result = await adapter.updateCells({
+    const result = await runtime.adapter.updateCells({
       container,
       schema: readOptionalString(body.schema),
       updates
@@ -90,27 +121,89 @@ export function createRoutes({ adapter, config, projectRoot }: ApiContext): Hono
     return c.json({ result });
   });
 
-  routes.post("/nyth-ai/chat", async (c) => {
+  routes.post("/rows", async (c) => {
+    if (!runtime.config.allowWrite) {
+      throw new ApiError(400, "Row inserts require --allow-write.");
+    }
+
     const body = await readJson<Record<string, unknown>>(c);
-    const input = normalizeNythAiInput(body);
-    const result = await requestNythAi(
-      {
-        ...input,
-        schema: await buildSchemaContext(adapter, config)
-      },
-      projectRoot
-    );
+    const input = readInsertRowsInput(body);
+    const result = await runtime.adapter.insertRows(input);
 
     return c.json({ result });
   });
 
+  routes.post("/nyth-ai/chat", async (c) => {
+    const body = await readJson<Record<string, unknown>>(c);
+    const input = {
+      ...normalizeNythAiInput(body),
+      schema: await buildSchemaContext(runtime.adapter, runtime.config)
+    };
+
+    if (body.stream !== true) {
+      const result = await requestNythAi(input, context.projectRoot);
+
+      return c.json({ result });
+    }
+
+    // Streaming: relay the backend's SSE to the studio UI. Anything that fails
+    // after the stream starts becomes a terminal `error` event.
+    return streamSSE(c, async (stream) => {
+      try {
+        const result = await askNythAiStream(
+          input,
+          {
+            onDelta: (text) => void stream.writeSSE({ event: "delta", data: JSON.stringify({ text }) })
+          },
+          { projectRoot: context.projectRoot }
+        );
+
+        await stream.writeSSE({ event: "done", data: JSON.stringify({ result }) });
+      } catch (error) {
+        const message = error instanceof Error ? error.message : "Nyth AI request failed.";
+        await stream.writeSSE({ event: "error", data: JSON.stringify({ error: message }) });
+      }
+    });
+  });
+
   routes.get("/nyth-ai/credits", async (c) => {
-    const result = await requestNythAiCredits(projectRoot);
+    const result = await requestNythAiCredits(context.projectRoot);
 
     return c.json({ result });
   });
 
   return routes;
+}
+
+function createRuntimeFromContext(context: ApiContext): ApiRuntime {
+  if (!context.adapter || !context.config) {
+    throw new Error("createRoutes requires either runtime or adapter/config.");
+  }
+
+  return {
+    adapter: context.adapter,
+    config: context.config
+  };
+}
+
+function readMeta(runtime: ApiRuntime): StudioMetaResponse {
+  return {
+    adapter: runtime.config.adapterName,
+    kind: runtime.adapter.kind,
+    allowWrite: runtime.config.allowWrite,
+    defaultLimit: runtime.config.defaultLimit,
+    maxLimit: runtime.config.maxLimit,
+    timeoutMs: runtime.config.timeoutMs
+  };
+}
+
+interface StudioMetaResponse {
+  adapter: string;
+  kind: DatabaseAdapter["kind"];
+  allowWrite: boolean;
+  defaultLimit: number;
+  maxLimit: number;
+  timeoutMs: number;
 }
 
 async function requestNythAi(input: NythAiChatInput, projectRoot: string | undefined) {
@@ -171,8 +264,6 @@ function normalizeNythAiInput(body: Record<string, unknown>) {
     prompt: readRequiredString(body.prompt, "prompt"),
     system: readOptionalString(body.system),
     model: readOptionalString(body.model),
-    thinking: readOptionalBoolean(body.thinking),
-    effort: readOptionalEffort(body.effort),
     temperature: readOptionalNumber(body.temperature, "temperature"),
     maxTokens: readOptionalNumber(body.maxTokens, "maxTokens")
   };
@@ -239,16 +330,16 @@ function readOptionalString(value: unknown): string | undefined {
   return typeof value === "string" && value.trim() !== "" ? value : undefined;
 }
 
-function readOptionalBoolean(value: unknown): boolean | undefined {
-  return typeof value === "boolean" ? value : undefined;
-}
+function readConnectionMode(value: unknown): "view" | "edit" | undefined {
+  if (value === undefined || value === null || value === "") {
+    return undefined;
+  }
 
-function readOptionalEffort(value: unknown): "low" | "medium" | "high" | undefined {
-  if (value === "low" || value === "medium" || value === "high") {
+  if (value === "view" || value === "edit") {
     return value;
   }
 
-  return undefined;
+  throw new ApiError(400, "mode must be view or edit.");
 }
 
 function readOptionalNumber(value: unknown, label: string): number | undefined {
@@ -275,6 +366,61 @@ function clampSearchLimit(value: unknown): number {
   return Math.min(Math.floor(parsed), 50);
 }
 
+const browseFilterOperators: ReadonlySet<BrowseFilterOperator> = new Set([
+  "eq",
+  "neq",
+  "gt",
+  "gte",
+  "lt",
+  "lte",
+  "contains",
+  "isNull",
+  "isNotNull"
+]);
+const maxBrowseFilters = 20;
+
+function readBrowseFilters(value: unknown): BrowseFilter[] | undefined {
+  if (value === undefined || value === null) {
+    return undefined;
+  }
+
+  if (!Array.isArray(value)) {
+    throw new ApiError(400, "filters must be an array.");
+  }
+
+  if (value.length === 0) {
+    return undefined;
+  }
+
+  if (value.length > maxBrowseFilters) {
+    throw new ApiError(400, `At most ${maxBrowseFilters} filters are supported.`);
+  }
+
+  return value.map((entry) => {
+    if (!entry || typeof entry !== "object" || Array.isArray(entry)) {
+      throw new ApiError(400, "Each filter must be an object.");
+    }
+
+    const filter = entry as Record<string, unknown>;
+    const column = readRequiredString(filter.column, "filter column");
+    const operator = filter.operator;
+
+    if (typeof operator !== "string" || !browseFilterOperators.has(operator as BrowseFilterOperator)) {
+      throw new ApiError(400, `Unsupported filter operator: ${String(operator)}`);
+    }
+
+    if (operator === "isNull" || operator === "isNotNull") {
+      return { column, operator };
+    }
+
+    if (filter.value === undefined) {
+      throw new ApiError(400, `Filter on ${column} requires a value.`);
+    }
+
+    return { column, operator: operator as BrowseFilterOperator, value: filter.value };
+  });
+}
+
 function readCellUpdates(value: unknown): CellUpdate[] {
   if (!Array.isArray(value) || value.length === 0) {
     throw new ApiError(400, "At least one cell update is required.");
@@ -297,6 +443,31 @@ function readCellUpdates(value: unknown): CellUpdate[] {
       column,
       value: update.value
     };
+  });
+}
+
+function readInsertRowsInput(body: Record<string, unknown>): InsertRowsInput {
+  const container = readRequiredString(body.container, "container");
+  const rows = readInsertRows(body.rows);
+
+  return {
+    container,
+    schema: readOptionalString(body.schema),
+    rows
+  };
+}
+
+function readInsertRows(value: unknown): Record<string, unknown>[] {
+  if (!Array.isArray(value) || value.length === 0) {
+    throw new ApiError(400, "At least one row is required.");
+  }
+
+  return value.map((row) => {
+    if (!row || typeof row !== "object" || Array.isArray(row)) {
+      throw new ApiError(400, "Each inserted row must be an object.");
+    }
+
+    return row as Record<string, unknown>;
   });
 }
 

@@ -26,7 +26,14 @@ export interface VisualizerEdge {
   targetId: string;
   sourceColumn: string;
   targetColumn: string;
+}
+
+export interface ConnectorGeometry {
   path: string;
+  sx: number;
+  sy: number;
+  ex: number;
+  ey: number;
 }
 
 export interface VisualizerGraph {
@@ -93,8 +100,7 @@ function buildEdges(nodes: VisualizerNode[]): VisualizerEdge[] {
         sourceId: source.id,
         targetId: target.id,
         sourceColumn: column.name,
-        targetColumn: column.foreignKey.column,
-        path: buildConnectorPath(source, target, column.name, column.foreignKey.column)
+        targetColumn: column.foreignKey.column
       });
     }
   }
@@ -112,25 +118,55 @@ function findTargetNode(nodes: VisualizerNode[], schema: string | undefined, tab
   );
 }
 
-function buildConnectorPath(
+// Geometry is computed from LIVE node positions at render time (so it follows
+// dragged cards), and uses orthogonal "step" routing instead of a bezier for a
+// cleaner, straighter look. Returns the path plus the two endpoint anchor points
+// so the panel can draw connection dots on the card edges.
+export function buildConnectorGeometry(
   source: VisualizerNode,
   target: VisualizerNode,
   sourceColumn: string,
   targetColumn: string
-): string {
-  const sourceIsLeft = source.x <= target.x;
-  const startX = sourceIsLeft ? source.x + source.width : source.x;
-  const endX = sourceIsLeft ? target.x : target.x + target.width;
-  const startY = getFieldAnchorY(source, sourceColumn);
-  const endY = getFieldAnchorY(target, targetColumn);
-  const controlOffset = Math.max(70, Math.abs(endX - startX) * 0.32);
-  const firstControlX = sourceIsLeft ? startX + controlOffset : startX - controlOffset;
-  const secondControlX = sourceIsLeft ? endX - controlOffset : endX + controlOffset;
+): ConnectorGeometry {
+  const sourceIsLeft = source.x + source.width / 2 <= target.x + target.width / 2;
+  const sx = sourceIsLeft ? source.x + source.width : source.x;
+  const ex = sourceIsLeft ? target.x : target.x + target.width;
+  const sy = getFieldAnchorY(source, sourceColumn);
+  const ey = getFieldAnchorY(target, targetColumn);
 
-  return `M ${startX} ${startY} C ${firstControlX} ${startY}, ${secondControlX} ${endY}, ${endX} ${endY}`;
+  return { path: orthogonalPath(sx, sy, ex, ey), sx, sy, ex, ey };
 }
 
-function getFieldAnchorY(node: VisualizerNode, columnName: string): number {
+function orthogonalPath(sx: number, sy: number, ex: number, ey: number): string {
+  const midX = (sx + ex) / 2;
+  const deltaStartX = midX - sx;
+  const deltaEndX = ex - midX;
+  const deltaY = ey - sy;
+  const radius = Math.max(0, Math.min(10, Math.abs(deltaStartX), Math.abs(deltaEndX), Math.abs(deltaY) / 2));
+
+  if (radius < 1) {
+    return `M ${round(sx)} ${round(sy)} L ${round(midX)} ${round(sy)} L ${round(midX)} ${round(ey)} L ${round(ex)} ${round(ey)}`;
+  }
+
+  const signStartX = Math.sign(deltaStartX) || 1;
+  const signY = Math.sign(deltaY) || 1;
+  const signEndX = Math.sign(deltaEndX) || 1;
+
+  return [
+    `M ${round(sx)} ${round(sy)}`,
+    `L ${round(midX - radius * signStartX)} ${round(sy)}`,
+    `Q ${round(midX)} ${round(sy)} ${round(midX)} ${round(sy + radius * signY)}`,
+    `L ${round(midX)} ${round(ey - radius * signY)}`,
+    `Q ${round(midX)} ${round(ey)} ${round(midX + radius * signEndX)} ${round(ey)}`,
+    `L ${round(ex)} ${round(ey)}`
+  ].join(" ");
+}
+
+function round(value: number): number {
+  return Math.round(value * 100) / 100;
+}
+
+export function getFieldAnchorY(node: VisualizerNode, columnName: string): number {
   const index = node.structure.columns.findIndex((column) => column.name === columnName);
   const anchoredIndex = Math.min(Math.max(index, 0), MAX_ANCHORED_FIELDS - 1);
 

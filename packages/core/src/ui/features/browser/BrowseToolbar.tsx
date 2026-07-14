@@ -1,11 +1,15 @@
 import type { ComponentChildren } from "preact";
-import { ChevronLeft, ChevronRight, RefreshCw, Table2 } from "lucide-preact";
+import { ChevronLeft, ChevronRight, Funnel, Maximize2, Minimize2, Plus, RefreshCw, Table2 } from "lucide-preact";
 
 import { QuickLoader } from "../../components/QuickLoader";
 
 interface BrowseToolbarProps {
+  canInsert?: boolean;
   canSave?: boolean;
   editStatus?: ComponentChildren;
+  expanded?: boolean;
+  filterCount?: number;
+  filtersOpen?: boolean;
   showControls?: boolean;
   title: string;
   limit: number;
@@ -13,38 +17,51 @@ interface BrowseToolbarProps {
   loading: boolean;
   page: number;
   pendingEditsCount?: number;
+  pendingRowsCount?: number;
   saving?: boolean;
   totalPages: number;
   onDiscardEdits?(): void;
+  onInsertRow?(): void;
   onLimitChange(limit: number): void;
   onPageChange(page: number): void;
   onRefresh(): void;
   onSaveRequest?(): void;
+  onToggleExpanded?(): void;
+  onToggleFilters?(): void;
 }
 
 const limitOptions = [25, 50, 100, 250, 500, 1000];
 
 export function BrowseToolbar({
+  canInsert = false,
   canSave = false,
   editStatus,
+  expanded = false,
+  filterCount = 0,
+  filtersOpen = false,
   title,
   limit,
   maxLimit,
   loading,
   page,
   pendingEditsCount = 0,
+  pendingRowsCount = 0,
   saving = false,
   showControls = true,
   totalPages,
   onDiscardEdits,
+  onInsertRow,
   onLimitChange,
   onPageChange,
   onRefresh,
-  onSaveRequest
+  onSaveRequest,
+  onToggleExpanded,
+  onToggleFilters
 }: BrowseToolbarProps) {
   const options = limitOptions.filter((option) => option <= maxLimit);
-  const hasEditActions = pendingEditsCount > 0;
-  const hasToolbarActions = hasEditActions || showControls;
+  const hasEditActions = pendingEditsCount > 0 || pendingRowsCount > 0;
+  const hasToolbarActions =
+    canInsert || hasEditActions || showControls || Boolean(onToggleExpanded) || Boolean(onToggleFilters);
 
   return (
     <div class="panel-toolbar">
@@ -55,16 +72,46 @@ export function BrowseToolbar({
       </div>
       {hasToolbarActions ? (
         <div class="toolbar-actions">
+          {onToggleFilters ? (
+            <button
+              aria-expanded={filtersOpen}
+              aria-label={filtersOpen ? "Hide filters" : "Show filters"}
+              class={filterCount > 0 || filtersOpen ? "filter-toggle-button active" : "filter-toggle-button"}
+              type="button"
+              onClick={onToggleFilters}
+            >
+              <Funnel aria-hidden="true" size={14} />
+              Filter
+              {filterCount > 0 ? <span class="filter-count-badge">{filterCount}</span> : null}
+            </button>
+          ) : null}
+          {canInsert ? (
+            <button class="insert-row-button" type="button" onClick={onInsertRow} disabled={saving}>
+              <Plus aria-hidden="true" size={14} />
+              Insert row
+            </button>
+          ) : null}
           {hasEditActions ? (
             <>
-              <span class="pending-edits-count">{pendingEditsCount} edits</span>
+              <span class="pending-edits-count">{formatPendingCount(pendingRowsCount, pendingEditsCount)}</span>
               <button class="secondary-button" type="button" onClick={onDiscardEdits} disabled={saving}>
-                Discard
+                Discard edits
               </button>
               <button aria-label={saving ? "Saving edits" : "Save edits"} class="save-button" type="button" onClick={onSaveRequest} disabled={!canSave || saving}>
-                {saving ? <QuickLoader className="button-loader" /> : "Save"}
+                {saving ? <QuickLoader className="button-loader" /> : formatSaveLabel(pendingRowsCount, pendingEditsCount)}
               </button>
             </>
+          ) : null}
+          {onToggleExpanded ? (
+            <button
+              aria-label={expanded ? "Show query editor" : "Expand result"}
+              class="secondary-button result-expand-button"
+              type="button"
+              onClick={onToggleExpanded}
+            >
+              {expanded ? <Minimize2 aria-hidden="true" size={15} /> : <Maximize2 aria-hidden="true" size={15} />}
+              {expanded ? "Show editor" : "Expand result"}
+            </button>
           ) : null}
           {showControls ? (
             <>
@@ -115,4 +162,30 @@ export function BrowseToolbar({
       ) : null}
     </div>
   );
+}
+
+function formatPendingCount(rows: number, edits: number): string {
+  const parts = [];
+
+  if (rows > 0) {
+    parts.push(`${rows} row${rows === 1 ? "" : "s"}`);
+  }
+
+  if (edits > 0) {
+    parts.push(`${edits} edit${edits === 1 ? "" : "s"}`);
+  }
+
+  return parts.join(" + ");
+}
+
+function formatSaveLabel(rows: number, edits: number): string {
+  if (rows > 0 && edits === 0) {
+    return `Save ${rows} row${rows === 1 ? "" : "s"}`;
+  }
+
+  if (rows === 0) {
+    return `Save ${edits} edit${edits === 1 ? "" : "s"}`;
+  }
+
+  return "Save changes";
 }

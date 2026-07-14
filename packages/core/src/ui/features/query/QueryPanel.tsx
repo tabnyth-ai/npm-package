@@ -1,5 +1,5 @@
 import { useEffect, useState } from "preact/hooks";
-import { Code2, Play } from "lucide-preact";
+import { Bot, Code2, Play } from "lucide-preact";
 
 import type { ContainerInfo, QueryInput, QueryResult as QueryResultData, StudioMeta } from "../../api/types";
 import { ErrorMessage } from "../../components/ErrorMessage";
@@ -15,10 +15,11 @@ interface QueryPanelProps {
   meta: StudioMeta;
   selected: ContainerInfo | null;
   onInsertedQueryConsumed?(): void;
+  onOpenNythAi?(): void;
   onRunResult?(result: QueryResultData): void;
 }
 
-export function QueryPanel({ insertedQuery, meta, selected, onInsertedQueryConsumed, onRunResult }: QueryPanelProps) {
+export function QueryPanel({ insertedQuery, meta, selected, onInsertedQueryConsumed, onOpenNythAi, onRunResult }: QueryPanelProps) {
   const [query, setQuery] = useState(() => createDefaultQuery(meta.kind, selected, meta.defaultLimit));
   const [parseError, setParseError] = useState<string | null>(null);
   const runner = useQueryRunner();
@@ -62,16 +63,22 @@ export function QueryPanel({ insertedQuery, meta, selected, onInsertedQueryConsu
           <Code2 aria-hidden="true" size={20} />
           <h2>Query Editor</h2>
         </div>
-        <button aria-label={runner.running ? "Running query" : "Run query"} type="button" onClick={() => void run()} disabled={runner.running}>
-          {runner.running ? (
-            <QuickLoader className="button-loader" color="#03100f" />
-          ) : (
-            <>
-              <Play aria-hidden="true" size={15} />
-              Run
-            </>
-          )}
-        </button>
+        <div class="query-toolbar-actions">
+          <button class="use-nyth-ai-button" type="button" onClick={onOpenNythAi}>
+            <Bot aria-hidden="true" size={15} />
+            Use NythAi
+          </button>
+          <button aria-label={runner.running ? "Running query" : "Run query"} type="button" onClick={() => void run()} disabled={runner.running}>
+            {runner.running ? (
+              <QuickLoader className="button-loader" color="#03100f" />
+            ) : (
+              <>
+                <Play aria-hidden="true" size={15} />
+                Run
+              </>
+            )}
+          </button>
+        </div>
       </div>
 
       <QueryEditor value={query} kind={meta.kind} onChange={setQuery} />

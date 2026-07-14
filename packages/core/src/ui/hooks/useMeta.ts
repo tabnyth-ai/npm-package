@@ -8,12 +8,31 @@ export function useMeta() {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
 
+  async function refresh(): Promise<StudioMeta | null> {
+    setLoading(true);
+    setError(null);
+
+    try {
+      const nextMeta = await getMeta();
+      setMeta(nextMeta);
+      return nextMeta;
+    } catch (err) {
+      setError(err instanceof Error ? err.message : String(err));
+      return null;
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  function replace(nextMeta: StudioMeta): void {
+    setMeta(nextMeta);
+    setError(null);
+    setLoading(false);
+  }
+
   useEffect(() => {
-    void getMeta()
-      .then(setMeta)
-      .catch((err: unknown) => setError(err instanceof Error ? err.message : String(err)))
-      .finally(() => setLoading(false));
+    void refresh();
   }, []);
 
-  return { meta, error, loading };
+  return { meta, error, loading, refresh, replace };
 }
