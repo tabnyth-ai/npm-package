@@ -1,4 +1,5 @@
 import { Hono, type Context } from "hono";
+import { streamSSE } from "hono/streaming";
 
 import type {
   BrowseFilter,
@@ -8,7 +9,7 @@ import type {
   InsertRowsInput,
   QueryInput
 } from "../adapters/types";
-import { askNythAi, getNythAiCreditBalance } from "../nyth/client";
+import { askNythAi, askNythAiStream, getNythAiCreditBalance } from "../nyth/client";
 import type { NythAiChatInput, NythAiSchemaContext } from "../nyth/types";
 import { clampLimit, readOffset, type PaginationLimits } from "../safety/limits";
 import { assertMongoOperationAllowed } from "../safety/mongoGuard";
@@ -134,16 +135,35 @@ export function createRoutes(context: ApiContext): Hono {
 
   routes.post("/nyth-ai/chat", async (c) => {
     const body = await readJson<Record<string, unknown>>(c);
-    const input = normalizeNythAiInput(body);
-    const result = await requestNythAi(
-      {
-        ...input,
-        schema: await buildSchemaContext(runtime.adapter, runtime.config)
-      },
-      context.projectRoot
-    );
+    const input = {
+      ...normalizeNythAiInput(body),
+      schema: await buildSchemaContext(runtime.adapter, runtime.config)
+    };
 
-    return c.json({ result });
+    if (body.stream !== true) {
+      const result = await requestNythAi(input, context.projectRoot);
+
+      return c.json({ result });
+    }
+
+    // Streaming: relay the backend's SSE to the studio UI. Anything that fails
+    // after the stream starts becomes a terminal `error` event.
+    return streamSSE(c, async (stream) => {
+      try {
+        const result = await askNythAiStream(
+          input,
+          {
+            onDelta: (text) => void stream.writeSSE({ event: "delta", data: JSON.stringify({ text }) })
+          },
+          { projectRoot: context.projectRoot }
+        );
+
+        await stream.writeSSE({ event: "done", data: JSON.stringify({ result }) });
+      } catch (error) {
+        const message = error instanceof Error ? error.message : "Nyth AI request failed.";
+        await stream.writeSSE({ event: "error", data: JSON.stringify({ error: message }) });
+      }
+    });
   });
 
   routes.get("/nyth-ai/credits", async (c) => {
@@ -244,8 +264,6 @@ function normalizeNythAiInput(body: Record<string, unknown>) {
     prompt: readRequiredString(body.prompt, "prompt"),
     system: readOptionalString(body.system),
     model: readOptionalString(body.model),
-    thinking: readOptionalBoolean(body.thinking),
-    effort: readOptionalEffort(body.effort),
     temperature: readOptionalNumber(body.temperature, "temperature"),
     maxTokens: readOptionalNumber(body.maxTokens, "maxTokens")
   };
@@ -322,18 +340,6 @@ function readConnectionMode(value: unknown): "view" | "edit" | undefined {
   }
 
   throw new ApiError(400, "mode must be view or edit.");
-}
-
-function readOptionalBoolean(value: unknown): boolean | undefined {
-  return typeof value === "boolean" ? value : undefined;
-}
-
-function readOptionalEffort(value: unknown): "low" | "medium" | "high" | undefined {
-  if (value === "low" || value === "medium" || value === "high") {
-    return value;
-  }
-
-  return undefined;
 }
 
 function readOptionalNumber(value: unknown, label: string): number | undefined {

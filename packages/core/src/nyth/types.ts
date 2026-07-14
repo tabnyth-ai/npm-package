@@ -1,5 +1,3 @@
-export type NythAiEffort = "low" | "medium" | "high";
-
 export interface NythAiSchemaColumn {
   name: string;
   type: string;
@@ -31,11 +29,16 @@ export interface NythAiChatInput {
   schema?: NythAiSchemaContext;
   system?: string;
   model?: string;
-  thinking?: boolean;
-  effort?: NythAiEffort;
   temperature?: number;
   maxTokens?: number;
   licenseKey?: string;
+}
+
+// Streaming callbacks for askNythAiStream: `onDelta` fires per text chunk as
+// the model generates it; the returned promise resolves with the final
+// NythAiChatResponse (from the stream's terminal `done` event).
+export interface NythAiStreamHandlers {
+  onDelta?(text: string): void;
 }
 
 export interface NythAiChatResponse {
